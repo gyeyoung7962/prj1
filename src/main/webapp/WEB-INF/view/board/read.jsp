@@ -7,11 +7,12 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <style>
-    div{
-        margin:20px;
+    div {
+        margin: 20px;
     }
 </style>
 <body>
+<c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
 
 <div class="row container col-md-8" style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
 
@@ -27,7 +28,7 @@
                     <p class="text-primary">제목</p>
                 </div>
                 <div class="col-md-6 ">
-                    <input type="text" class="form-control"  name="title" value="${board.title}" readonly>
+                    <input type="text" class="form-control" name="title" value="${board.title}" readonly>
                 </div>
             </div>
 
@@ -37,7 +38,8 @@
                 </div>
 
                 <div class="col-md-6">
-                    <textarea class="form-control" name="content" cols="30" rows="10" style="resize: none;" readonly>${board.content}</textarea>
+                    <textarea class="form-control" name="content" cols="30" rows="10" style="resize: none;"
+                              readonly>${board.content}</textarea>
                 </div>
             </div>
 
@@ -59,6 +61,15 @@
                 <div class="col-md-6">
                     <input type="datetime-local" class="form-control" name="writer" value="${board.regDate}" readonly>
                 </div>
+            </div>
+            <div>
+                <button class="btn btn-primary">수정</button>
+            </div>
+            <div>
+                <form action="/board/delete" method="post">
+                    <input type="hidden" name="id" value="${list.id}">
+                    <button class="btn btn-danger">삭제</button>
+                </form>
             </div>
         </form>
     </div>
