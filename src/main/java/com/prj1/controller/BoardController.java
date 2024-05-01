@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -55,6 +57,7 @@ public class BoardController {
 
         //게시물 목록 조회(select)
         List<Board> list = service.boardList();
+
         //모델에 넣고
         model.addAttribute("list", list);
         //jsp로 포워드
