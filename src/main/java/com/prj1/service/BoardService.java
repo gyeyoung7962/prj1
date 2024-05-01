@@ -31,8 +31,8 @@ public class BoardService {
         return mapper.list();
     }
 
-    public void deleteBoard(Integer id) {
+    public void boardUpdate(Board board) {
 
-        mapper.deleteBoard(id);
+        mapper.updateBoard(board);
     }
 }
