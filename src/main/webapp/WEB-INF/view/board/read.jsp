@@ -19,7 +19,7 @@
 
     <div class="col-md-3"></div>
     <div class="col-md-6" style="border: 1px solid lightcoral; border-radius: 20px; padding:20px;">
-        <h3>게시글 확인</h3>
+        <h3>${board.id}번 게시글 확인</h3>
         <hr/>
 
         <form action="/board/add" method="post">
