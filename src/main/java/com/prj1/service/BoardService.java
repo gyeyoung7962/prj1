@@ -30,4 +30,9 @@ public class BoardService {
 
         return mapper.list();
     }
+
+    public void boardUpdate(Board board) {
+
+        mapper.updateBoard(board);
+    }
 }

@@ -62,16 +62,13 @@
                     <input type="datetime-local" class="form-control" name="writer" value="${board.regDate}" readonly>
                 </div>
             </div>
-            <div>
-                <button class="btn btn-primary">수정</button>
-            </div>
-            <div>
-                <form action="/board/delete" method="post">
-                    <input type="hidden" name="id" value="${list.id}">
-                    <button class="btn btn-danger">삭제</button>
-                </form>
-            </div>
         </form>
+        <div>
+            <form action="/board/update" method="get">
+                <input type="hidden" name="id" value="${board.id}">
+                <button class="btn btn-primary">수정</button>
+            </form>
+        </div>
     </div>
     <div class="col-md-3"></div>
 </div>

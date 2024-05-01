@@ -60,7 +60,23 @@ public class BoardController {
         //jsp로 포워드
 
         return "board/list";
+    }
 
+    @GetMapping("/update")
+    public void updateBoard(Integer id, Model model){
+
+        model.addAttribute("board", service.selectBoard(id));
+
+
+
+    }
+
+    @PostMapping("/update")
+    public String updateBoard(Board board){
+
+        service.boardUpdate(board);
+
+        return "redirect:/board/list";
     }
 
 
