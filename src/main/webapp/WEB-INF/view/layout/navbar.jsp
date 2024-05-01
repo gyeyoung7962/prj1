@@ -4,31 +4,36 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <style>
     * {
-        font-family: 'Dovemayo_gothic';
-        @font-face {
-            font-family: 'Dovemayo_gothic';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
+        font-family:'NanumSquareNeo-Variable';
+    }
+
+    @font-face {
+        font-family: 'NanumSquareNeo-Variable';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
     }
 
 
 </style>
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(40,121,176,0.8)">
     <div class="container">
-        <a class="navbar-brand text-white fs-2" href="/">Project</a>
+        <a class="navbar-brand text-white fs-3" href="/" style="font-weight: bold;">Project</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarText" style="border: 1px solid black;">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="border: 1px solid black;">
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
+                </li>
+
                     <li class="nav-item">
-                        <a class="nav-link active text-white fs-5" aria-current="page" href="/board/list">목록</a>
+                        <a class="nav-link text-white fs-6" aria-current="page" href="/user/join">회원가입</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fs-5" href="/board/add">글쓰기</a>
+                        <a class="nav-link text-white fs-6" href="/user/login">로그인</a>
                     </li>
             </ul>
         </div>

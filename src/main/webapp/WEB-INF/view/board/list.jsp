@@ -15,7 +15,7 @@
     <h3>전체 게시물 조회</h3>
     <hr/>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead class="table-primary">
         <tr>
             <th class="col-1 text-align-center">글번호</th>
@@ -44,6 +44,57 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <div class="row">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>분류</option>
+                <option value="3">전체검색</option>
+                <option value="1">제목</option>
+                <option value="2">작성자</option>
+                <option value="3">내용</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <input type="text" class="form-control col-md-6" aria-label="Text input with segmented dropdown button">
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary" style="margin-right: 30px;">검색</button>
+        </div>
+
+        <div class="col-md-2" style="text-align: end;">
+            <a href="/board/add" class="btn btn-success">글쓰기</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>
