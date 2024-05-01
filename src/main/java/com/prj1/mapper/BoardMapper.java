@@ -35,4 +35,12 @@ public interface BoardMapper {
             board where id = #{id}
             """)
     void deleteBoard(Integer id);
+
+
+    @Update("""
+            update board
+            set title=#{title}, content = #{content}, writer = #{writer}
+            where id = #{id}
+""")
+    void updateBoard(Board board);
 }

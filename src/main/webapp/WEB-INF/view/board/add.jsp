@@ -25,30 +25,31 @@
         <form action="/board/add" method="post">
             <div class="row" style="margin: 0 auto;">
                 <div class="col-md-2">
-                    <p class="text-primary">제목</p>
+<%--                    <p class="text-primary">제목</p>--%>
+                    <label for="inputTitle" class="form-label text-primary">제목</label>
                 </div>
-                <div class="col-md-6 ">
-                    <input type="text" class="form-control"  name="title" required>
+                <div class="col-md-6">
+                    <input id="inputTitle" type="text" class="form-control"  name="title" required>
                 </div>
             </div>
 
             <div class="row" style="margin: 0 auto;">
                 <div class="col-md-2">
-                    <p class="text-primary">본문</p>
+                    <label for="inputContent" class="form-label text-primary">내용</label>
                 </div>
 
                 <div class="col-md-6">
-                    <textarea class="form-control" name="content" cols="30" rows="10" style="resize: none;" required></textarea>
+                    <textarea id="inputContent" class="form-control" name="content" cols="30" rows="10" style="resize: none;" required></textarea>
                 </div>
             </div>
 
             <div class="row" style="margin: 0 auto;">
                 <div class="col-md-2">
-                    <p class="text-primary">작성자</p>
+                    <label for="inputWriter" class="text-primary">작성자</label>
                 </div>
 
                 <div class="col-md-6">
-                    <input type="text" class="form-control" name="writer" required>
+                    <input id="inputWriter" type="text" class="form-control" name="writer" required>
                 </div>
             </div>
 

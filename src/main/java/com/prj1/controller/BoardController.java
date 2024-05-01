@@ -63,7 +63,27 @@ public class BoardController {
         //jsp로 포워드
 
         return "board/list";
+    }
 
+    @PostMapping("/delete")
+    public String delete(Integer id){
+
+        service.deleteBoard(id);
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/update")
+    public void update(Integer id, Model model){
+
+            model.addAttribute("board", service.selectBoard(id));
+    }
+
+    @PostMapping("/update")
+    public String postUpdate(Board board){
+
+        service.boardUpdate(board);
+
+        return "redirect:/board/list";
     }
 
 

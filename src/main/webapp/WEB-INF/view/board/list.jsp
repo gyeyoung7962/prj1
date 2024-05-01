@@ -13,7 +13,7 @@
     }
 </style>
 <body>
-
+<c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
 <div class="row container col-md-8" style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
 
 

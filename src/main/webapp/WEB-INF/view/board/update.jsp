@@ -18,56 +18,55 @@
 
 
     <div class="col-md-3"></div>
-        <div class="col-md-6" style="border: 1px solid lightcoral; border-radius: 20px; padding:20px;">
-            <h3>게시글 수정</h3>
-            <hr/>
-            <form action="/board/update" method="post">
-                <div class="row" style="margin: 0 auto;">
-                    <div class="col-md-2">
-                        <p class="text-primary">제목</p>
-                    </div>
-                    <div class="col-md-6 ">
-                        <input type="text" class="form-control" name="title" value="${board.title}" >
-                    </div>
+    <div class="col-md-6" style="border: 1px solid lightcoral; border-radius: 20px; padding:20px;">
+        <h3>게시글 수정</h3>
+        <hr/>
+        <form action="/board/update" method="post">
+            <div class="row" style="margin: 0 auto;">
+                <div class="col-md-2">
+                    <p class="text-primary">제목</p>
                 </div>
-
-                <div class="row" style="margin: 0 auto;">
-                    <div class="col-md-2">
-                        <p class="text-primary">본문</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <textarea class="form-control" name="content" cols="30" rows="10" style="resize: none;"
-                                  >${board.content}</textarea>
-                    </div>
+                <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="title" value="${board.title}">
                 </div>
-
-                <div class="row" style="margin: 0 auto;">
-                    <div class="col-md-2">
-                        <p class="text-primary">작성자</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" name="writer" value="${board.writer}" >
-                    </div>
-                </div>
-
-                <div class="row" style="margin: 0 auto;">
-                    <div class="col-md-2">
-                        <p class="text-primary">작성일</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <input type="datetime-local" class="form-control" name="regDate" value="${board.regDate}" readonly >
-                    </div>
-                </div>
-            <div>
-
-                    <input type="hidden" name="id" value="${board.id}">
-                    <button class="btn btn-primary">수정</button>
             </div>
-            </form>
-        </div>
+
+            <div class="row" style="margin: 0 auto;">
+                <div class="col-md-2">
+                    <p class="text-primary">본문</p>
+                </div>
+
+                <div class="col-md-6">
+                        <textarea class="form-control" name="content" cols="30" rows="10" style="resize: none;"
+                        >${board.content}</textarea>
+                </div>
+            </div>
+
+            <div class="row" style="margin: 0 auto;">
+                <div class="col-md-2">
+                    <p class="text-primary">작성자</p>
+                </div>
+
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="writer" value="${board.writer}">
+                </div>
+            </div>
+
+            <div class="row" style="margin: 0 auto;">
+                <div class="col-md-2">
+                    <p class="text-primary">작성일</p>
+                </div>
+
+                <div class="col-md-6">
+                    <input type="datetime-local" class="form-control" name="regDate" value="${board.regDate}" readonly>
+                </div>
+            </div>
+            <div>
+                <input type="hidden" name="id" value="${board.id}">
+                <button class="btn btn-primary">수정</button>
+            </div>
+        </form>
+    </div>
     <div class="col-md-3"></div>
 </div>
 </body>
