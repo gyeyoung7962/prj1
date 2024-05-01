@@ -1,10 +1,7 @@
 package com.prj1.mapper;
 
 import com.prj1.domain.Board;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -33,4 +30,9 @@ public interface BoardMapper {
             """)
     List<Board> list();
 
+    @Delete("""
+            delete from
+            board where id = #{id}
+            """)
+    void deleteBoard(Integer id);
 }

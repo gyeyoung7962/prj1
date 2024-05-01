@@ -7,10 +7,10 @@
 </style>
 <div class="container-fluid row bg-primary">
     <div>
-        <a href="/board/list">목록</a>
+        <a href="/board/list" style="color: white;">목록</a>
     </div>
 
     <div>
-        <a href="/board/add">글쓰기</a>
+        <a href="/board/add" style="color: white;">글쓰기</a>
     </div>
 </div>

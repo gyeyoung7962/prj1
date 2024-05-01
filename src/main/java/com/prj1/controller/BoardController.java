@@ -60,7 +60,16 @@ public class BoardController {
         //jsp로 포워드
 
         return "board/list";
+    }
 
+    @PostMapping("/delete")
+    public String deleteBoard(Integer id){
+
+        System.out.println("id :" +id);
+
+        service.deleteBoard(id);
+
+        return "redirect:/board/list";
     }
 
 
