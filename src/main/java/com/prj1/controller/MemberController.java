@@ -40,7 +40,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginPost(Member member, Model model, HttpServletRequest req){
+    public String loginPost(Member member,Model model, HttpServletRequest req){
 
         HttpSession session = req.getSession();
 

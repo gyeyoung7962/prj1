@@ -34,7 +34,7 @@ public interface MemberMapper {
     @Select("""
             select *
             from member
-            where id = #{id} and password = #{password}
+            where email = #{email} and password = #{password}
             """)
     Member loginMember(Member member);
 
