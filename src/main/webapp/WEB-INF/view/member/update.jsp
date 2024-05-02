@@ -58,7 +58,7 @@
                                 <label>비밀번호 확인</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password" id="passwordChk"
+                                <input type="password" class="form-control" id="passwordChk"
                                        onkeyup="pw_chk()">
                             </div>
                         </div>
