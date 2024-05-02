@@ -39,7 +39,7 @@
                                 <label>이메일</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="${member.email}">
+                                <input type="email" class="form-control" name="email" value="${member.email}" readonly>
                             </div>
                         </div>
 
