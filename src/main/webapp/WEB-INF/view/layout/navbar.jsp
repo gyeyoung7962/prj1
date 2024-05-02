@@ -45,7 +45,11 @@
 
                     <c:if test="${nickName != null}">
                         <li class="nav-item">
-                            <a class="nav-link text-white fs-6">${login.nickName}</a>
+                            <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${login.nickName}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" href="/member/logout">로그아웃</a>
                         </li>
                     </c:if>
             </ul>

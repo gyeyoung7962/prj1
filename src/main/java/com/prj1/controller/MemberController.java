@@ -51,6 +51,7 @@ public class MemberController {
             session.setAttribute("nickName", loginMember.getNickName());
             model.addAttribute("session", session);
             model.addAttribute("nickName", loginMember.getNickName());
+            model.addAttribute("id", loginMember.getId());
         }
 
 
@@ -98,5 +99,15 @@ public class MemberController {
 
 
         return "redirect:/member/info";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req){
+
+        HttpSession session = req.getSession();
+
+        session.invalidate();
+
+        return "redirect:/";
     }
 }
