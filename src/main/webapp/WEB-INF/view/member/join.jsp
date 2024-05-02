@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
           integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -19,24 +21,33 @@
     <hr/>
     <form action="/member/join" method="post">
         <div class="row mb-3">
-            <div class="">
+            <div class="col-md-2">
                 <label for="inputEmail">이메일</label>
             </div>
-            <input type="email" class="form-control" id="inputEmail" name="email" required>
+            <div class="col-md-7">
+                <input type="email" class="form-control" id="inputEmail" name="email" required>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-secondary" onclick="emailChk()">중복체크</button>
+            </div>
+
+            <div>
+                <p class="email_msg"></p>
+            </div>
         </div>
 
         <div class="row mb-3">
             <div class="">
                 <label for="inputPassword">비밀번호</label>
             </div>
-            <input type="password" class="form-control" id="inputPassword" name="password" required>
+            <input type="password" class="form-control" id="inputPassword" name="password">
         </div>
 
         <div class="row mb-3">
             <div class="">
                 <label for="inputPasswordChk">비밀번호 확인</label>
             </div>
-            <input type="password" class="form-control" id="inputPasswordChk" required onkeyup="pw_chk()">
+            <input type="password" class="form-control" id="inputPasswordChk" onkeyup="pw_chk()">
 
             <div>
                 <p class="pw_msg"></p>
@@ -61,12 +72,30 @@
     </form>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 <script>
 
+    function emailChk() {
+
+        const emailVal = $("#inputEmail").val();
+        $.ajax({
+            url: "/member/emailChk",
+            type: "get",
+            data: {
+                email: emailVal
+            },
+            success: function (result) {
+                if (result == 0) {
+                    $(".email_msg").removeClass("text-danger");
+                    $(".email_msg").html("사용가능한 이메일입니다").addClass("text-primary").show();
+                } else if (result == 1) {
+                    $(".email_msg").removeClass("text-primary");
+                    $(".email_msg").html("사용 불가능한 이메일입니다").addClass("text-danger").show();
+                }
+            }
+        });
+    }
 
     function pw_chk() {
 
@@ -83,5 +112,8 @@
     }
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

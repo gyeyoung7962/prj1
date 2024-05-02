@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -110,4 +108,15 @@ public class MemberController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/emailChk")
+    @ResponseBody
+    public int emailChk(@RequestParam("email") String email){
+
+        System.out.println("email = " + email);
+
+        return service.emailChk(email);
+    }
+
+
 }

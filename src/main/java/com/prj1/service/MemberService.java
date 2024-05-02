@@ -43,4 +43,9 @@ public class MemberService {
 
         mapper.updateMember(member);
     }
+
+    public int emailChk(String email) {
+
+        return mapper.emailChk(email);
+    }
 }

@@ -28,17 +28,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
-                </li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
-                </li>
-
-
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
+                    </li>
+                </ul>
 
             <div class="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">

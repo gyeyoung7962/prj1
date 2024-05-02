@@ -51,4 +51,11 @@ public interface MemberMapper {
             where id = #{id}
             """)
     void updateMember(Member member);
+
+    @Select("""
+            select count(*)
+            from member
+            where email = #{email}
+            """)
+    int emailChk(String email);
 }

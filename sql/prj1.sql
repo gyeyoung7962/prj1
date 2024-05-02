@@ -22,7 +22,7 @@ drop table member;
 create table member
 (
     id       int primary key auto_increment,
-    email    varchar(200) not null UNIQUE,
+    email    varchar(200) not null,
     password varchar(200) not null,
     nick_name varchar(100) not null UNIQUE,
     regDate  datetime default now()
@@ -34,3 +34,7 @@ alter table member
 select *
 from member;
 
+
+select count(*)
+from member
+where email = 'test1@naver.com';
