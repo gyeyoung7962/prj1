@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <a href="/member/update?id=${member.id}"><button class="btn btn-primary">수정</button></a>
-                    <button id="back" class="btn btn-warning">뒤로</button>
+                    <button id="back" class="btn btn-warning" onclick="window.history.back();">뒤로</button>
                 </div>
             </div>
         </div>

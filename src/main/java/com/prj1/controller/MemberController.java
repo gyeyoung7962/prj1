@@ -46,17 +46,17 @@ public class MemberController {
 
         Member loginMember = service.loginMember(member);
 
-        if(session != null){
+        if(session != null && loginMember !=null){
             session.setAttribute("login", loginMember);
             session.setAttribute("nickName", loginMember.getNickName());
+            session.setMaxInactiveInterval(1800);
             model.addAttribute("session", session);
             model.addAttribute("nickName", loginMember.getNickName());
             model.addAttribute("id", loginMember.getId());
         }
-
-
-
-
+        else if(loginMember == null){
+            return "redirect:/member/login";
+        }
         return "redirect:/";
     }
 

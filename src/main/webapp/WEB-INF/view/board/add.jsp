@@ -3,7 +3,9 @@
 <html>
 <head>
     <title>새 게시물 작성</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+          integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
@@ -19,11 +21,11 @@
         <form action="/board/add" method="post">
             <div class="row mb-2" style="margin: 0 auto;">
                 <div class="col-md-2">
-<%--                    <p class="text-primary">제목</p>--%>
+                    <%--                    <p class="text-primary">제목</p>--%>
                     <label for="inputTitle" class="form-label text-primary">제목</label>
                 </div>
                 <div class="col-md-10">
-                    <input id="inputTitle" type="text" class="form-control"  name="title" required>
+                    <input id="inputTitle" type="text" class="form-control" name="title" required>
                 </div>
             </div>
 
@@ -33,7 +35,8 @@
                 </div>
 
                 <div class="col-md-10">
-                    <textarea id="inputContent" class="form-control" name="content" cols="30" rows="10" style="resize: none;" required></textarea>
+                    <textarea id="inputContent" class="form-control" name="content" cols="30" rows="10"
+                              style="resize: none;" required></textarea>
                 </div>
             </div>
 
@@ -57,6 +60,8 @@
     <div class="col-md-2"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
