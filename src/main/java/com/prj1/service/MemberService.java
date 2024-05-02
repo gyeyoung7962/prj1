@@ -23,4 +23,9 @@ public class MemberService {
 
         return mapper.memberList();
     }
+
+    public Member infoMember(Integer id) {
+
+        return mapper.infoMember(id);
+    }
 }

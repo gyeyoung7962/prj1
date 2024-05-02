@@ -9,6 +9,8 @@
           integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
+<style>
+</style>
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
 <div class="container" style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
@@ -26,7 +28,7 @@
         <c:forEach items="${list}" var="list">
         <tr>
             <td>${list.id}</td>
-            <td>${list.email}</td>
+            <td><a href="/member/info?id=${list.id}" style="text-decoration: none;">${list.email}</a></td>
             <td>${list.nickName}</td>
             <td>${list.password}</td>
             <td>${list.regDate}</td>

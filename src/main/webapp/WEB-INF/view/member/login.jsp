@@ -14,9 +14,10 @@
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
 
 <div class="container col-md-5" style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
-    <h3>로그인</h3>
-    <hr/>
-    <div class="row">
+
+    <div class="row col-md-8" style="margin: 0 auto;">
+        <h3>로그인</h3>
+        <hr/>
         <form action="/member/login" method="post">
             <div class="row mb-3">
                 <div class="col-md-3">
