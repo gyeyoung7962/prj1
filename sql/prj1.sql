@@ -25,6 +25,8 @@ create table member(
   nick_name varchar(100) not null UNIQUE
 );
 
+alter table member add column regDate datetime default now();
+
 select *
 from member;
 

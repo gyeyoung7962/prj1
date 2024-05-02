@@ -29,11 +29,15 @@
                     <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
+                </li>
+
                     <li class="nav-item">
                         <a class="nav-link text-white fs-6" aria-current="page" href="/member/join">회원가입</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/user/login">로그인</a>
+                        <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
                     </li>
             </ul>
         </div>
