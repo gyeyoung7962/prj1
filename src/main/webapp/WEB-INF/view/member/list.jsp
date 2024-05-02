@@ -42,7 +42,7 @@
                 </form>
                     </div>
                     <div class="col-md-6">
-                <form action="/member/update" method="post">
+                <form action="/member/update" method="get">
                     <input type="hidden" name="id" value="${list.id}">
                     <button class="btn btn-warning">수정</button>
                 </form>

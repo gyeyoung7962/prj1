@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/member")
@@ -50,7 +51,6 @@ public class MemberController {
             session.setAttribute("nickName", loginMember.getNickName());
             model.addAttribute("session", session);
             model.addAttribute("nickName", loginMember.getNickName());
-
         }
 
 
@@ -82,4 +82,21 @@ public class MemberController {
         return "redirect:/member/list";
     }
 
+    @GetMapping("/update")
+    public void update(Integer id, Model model){
+
+        model.addAttribute("member", service.infoMember(id));
+    }
+
+
+    @PostMapping("/update")
+    public String update(Member member, RedirectAttributes rttr){
+
+        service.updateMember(member);
+
+        rttr.addAttribute("id", member.getId());
+
+
+        return "redirect:/member/info";
+    }
 }

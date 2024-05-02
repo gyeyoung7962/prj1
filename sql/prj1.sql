@@ -18,14 +18,18 @@ desc board;
 select *
 from board;
 
-create table member(
-    id int primary key auto_increment,
-  email varchar(200) not null UNIQUE ,
-  password varchar(200) not null,
-  nick_name varchar(100) not null UNIQUE
+drop table member;
+create table member
+(
+    id       int primary key auto_increment,
+    email    varchar(200) not null UNIQUE,
+    password varchar(200) not null,
+    nick_name varchar(100) not null UNIQUE,
+    regDate  datetime default now()
 );
 
-alter table member add column regDate datetime default now();
+alter table member
+    add column regDate datetime default now();
 
 select *
 from member;

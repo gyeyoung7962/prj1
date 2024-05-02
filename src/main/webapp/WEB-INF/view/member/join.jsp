@@ -47,7 +47,7 @@
             <div class="">
                 <label for="inputNickName">닉네임</label>
             </div>
-            <input type="text" class="form-control" id="inputNickName" name="nick_name" required>
+            <input type="text" class="form-control" id="inputNickName" name="nickName" required>
         </div>
         <div class="row mb-3" style="text-align:right;">
             <div class="col-md-12">

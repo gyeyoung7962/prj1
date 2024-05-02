@@ -11,11 +11,11 @@
 </head>
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
-<div class="container col-md-5" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
+<div class="container col-md-7" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
 
 
     <div class="col-md-2"></div>
-    <div class="row col-md-6" style="margin: 0 auto;">
+    <div class="row col-md-8" style="margin: 0 auto;">
         <h3>회원 정보 조회</h3>
         <hr/>
         <div class="card">
