@@ -37,28 +37,34 @@
                     <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
                 </li>
 
-                <c:if test="${nickName == null}">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" aria-current="page" href="/member/join">회원가입</a>
-                    </li>
-                </c:if>
 
-                <c:if test="${nickName == null}">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
-                    </li>
-                </c:if>
-
-                <c:if test="${nickName != null}">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${login.nickName}</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/member/logout">로그아웃</a>
-                    </li>
-                </c:if>
             </ul>
+
+            <div class="navbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <c:if test="${nickName == null}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" aria-current="page" href="/member/join">회원가입</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${nickName == null}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${nickName != null}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${login.nickName}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" href="/member/logout">로그아웃</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
