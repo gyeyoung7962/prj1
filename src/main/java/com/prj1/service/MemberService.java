@@ -33,4 +33,9 @@ public class MemberService {
 
         return mapper.loginMember(member);
     }
+
+    public void deleteMember(Integer id) {
+
+        mapper.deleteMember(id);
+    }
 }

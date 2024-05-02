@@ -2,6 +2,7 @@ package com.prj1.mapper;
 
 
 import com.prj1.domain.Member;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -39,4 +40,11 @@ public interface MemberMapper {
             where id = #{id} and password = #{password}
             """)
     Member loginMember(Member member);
+
+    @Delete("""
+            delete 
+            from member
+            where id = #{id}
+            """)
+    void deleteMember(Integer id);
 }

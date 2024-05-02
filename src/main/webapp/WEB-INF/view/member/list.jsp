@@ -36,7 +36,7 @@
             <td>
                 <div class="row">
                     <div class="col-md-6">
-                <form action="/member/delete" method="post">
+                <form action="/member/delete" method="post" onsubmit="return confirm('삭제 하시겠습니까?')">
                     <input type="hidden" name="id" value="${list.id}">
                     <button class="btn btn-danger">삭제</button>
                 </form>
