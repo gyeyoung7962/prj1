@@ -3,6 +3,8 @@ package com.prj1.controller;
 
 import com.prj1.domain.Member;
 import com.prj1.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,27 @@ public class MemberController {
     @GetMapping("/login")
     public void loginGet(){
 
+    }
+
+    @PostMapping("/login")
+    public String loginPost(Member member, Model model, HttpServletRequest req){
+
+        HttpSession session = req.getSession();
+
+        Member loginMember = service.loginMember(member);
+
+        if(session != null){
+            session.setAttribute("login", loginMember);
+            session.setAttribute("nickName", loginMember.getNickName());
+            model.addAttribute("session", session);
+            model.addAttribute("nickName", loginMember.getNickName());
+
+        }
+
+
+
+
+        return "redirect:/";
     }
 
 

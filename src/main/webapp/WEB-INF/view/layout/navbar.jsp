@@ -36,9 +36,18 @@
                     <li class="nav-item">
                         <a class="nav-link text-white fs-6" aria-current="page" href="/member/join">회원가입</a>
                     </li>
+
+                    <c:if test="${nickName == null}">
                     <li class="nav-item">
                         <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
                     </li>
+                    </c:if>
+
+                    <c:if test="${nickName != null}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6">${login.nickName}</a>
+                        </li>
+                    </c:if>
             </ul>
         </div>
     </div>

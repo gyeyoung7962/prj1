@@ -47,6 +47,15 @@
                             ${member.password}
                         </div>
                     </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>닉네임</label>
+                        </div>
+                        <div class="col-md-6">
+                            ${member.nickName}
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>등록일</label>

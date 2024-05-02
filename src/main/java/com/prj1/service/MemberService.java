@@ -28,4 +28,9 @@ public class MemberService {
 
         return mapper.infoMember(id);
     }
+
+    public Member loginMember(Member member) {
+
+        return mapper.loginMember(member);
+    }
 }

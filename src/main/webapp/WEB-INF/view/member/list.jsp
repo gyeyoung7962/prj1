@@ -23,6 +23,7 @@
             <th class="col-2">닉네임</th>
             <th class="col-2">비밀번호</th>
             <th class="col-2">가입일</th>
+            <th class="col-2">체크</th>
         </thead>
         <tbody>
         <c:forEach items="${list}" var="list">
@@ -32,6 +33,23 @@
             <td>${list.nickName}</td>
             <td>${list.password}</td>
             <td>${list.regDate}</td>
+            <td>
+                <div class="row">
+                    <div class="col-md-6">
+                <form action="/member/delete" method="post">
+                    <input type="hidden" name="id" value="${list.id}">
+                    <button class="btn btn-danger">삭제</button>
+                </form>
+                    </div>
+                    <div class="col-md-6">
+                <form action="/member/update" method="post">
+                    <input type="hidden" name="id" value="${list.id}">
+                    <button class="btn btn-warning">수정</button>
+                </form>
+                    </div>
+                    </div>
+                </div>
+            </td>
         </tr>
         </c:forEach>
         </tbody>

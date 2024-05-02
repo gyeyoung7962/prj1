@@ -32,4 +32,11 @@ public interface MemberMapper {
             where id = #{id}
             """)
     Member infoMember(Integer id);
+
+    @Select("""
+            select *
+            from member
+            where id = #{id} and password = #{password}
+            """)
+    Member loginMember(Member member);
 }
