@@ -58,4 +58,13 @@ public interface MemberMapper {
             where email = #{email}
             """)
     int emailChk(String email);
+
+    @Select(
+            """
+            select *
+            from member
+            where email = #{email}
+            """
+    )
+    Member selectByEmail(String email);
 }

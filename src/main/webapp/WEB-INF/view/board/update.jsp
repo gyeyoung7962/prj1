@@ -38,15 +38,15 @@
                 </div>
             </div>
 
-            <div class="row mb-2" style="margin: 0 auto;">
-                <div class="col-md-2">
-                    <label for="inputWriter" class="text-primary">작성자</label>
-                </div>
+<%--            <div class="row mb-2" style="margin: 0 auto;">--%>
+<%--                <div class="col-md-2">--%>
+<%--                    <label for="inputWriter" class="text-primary">작성자</label>--%>
+<%--                </div>--%>
 
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="writer" id="inputWriter" value="${board.writer}">
-                </div>
-            </div>
+<%--                <div class="col-md-10">--%>
+<%--                    <input type="text" class="form-control" name="writer" id="inputWriter" value="${board.writer}">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
             <div class="row mb-2" style="margin: 0 auto;">
                 <div class="col-md-2">

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
       integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
       crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -28,39 +29,41 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
-                    </li>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
-                    </li>
-                </ul>
+                <li class="nav-item">
+                    <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
+                </li>
+            </ul>
 
             <div class="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <c:if test="${nickName == null}">
+                    <sec:authorize access="not isAuthenticated()">
                         <li class="nav-item">
                             <a class="nav-link text-white fs-6" aria-current="page" href="/member/join">회원가입</a>
                         </li>
-                    </c:if>
+                    </sec:authorize>
 
-                    <c:if test="${nickName == null}">
+                    <sec:authorize access="not isAuthenticated()">
                         <li class="nav-item">
                             <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
                         </li>
-                    </c:if>
+                    </sec:authorize>
 
-                    <c:if test="${nickName != null}">
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal.member" var="member"/>
                         <li class="nav-item">
-                            <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${login.nickName}</a>
+                            <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${member.nickName}</a>
                         </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link text-white fs-6" href="/member/logout">로그아웃</a>
                         </li>
-                    </c:if>
+                    </sec:authorize>
                 </ul>
             </div>
         </div>

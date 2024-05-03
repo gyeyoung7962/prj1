@@ -49,3 +49,24 @@ select *
 from board;
 
 alter table board auto_increment = 1;
+
+#board 테이블 수정
+#writer 컬럼 지우기
+#member_id int references member(id) 컬럼추가
+
+alter table board drop column writer;
+
+alter table board add column member_id int references member (id);
+
+update board set member_id = 2
+where id > 0;
+
+select *
+from board;
+
+select *
+from member;
+
+
+select *
+from member;

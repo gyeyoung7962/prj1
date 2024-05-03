@@ -24,7 +24,7 @@
                     <label for="inputEmail">이메일</label>
                 </div>
                 <div class="col-md-9">
-                    <input type="email" class="form-control" id="inputEmail" name="email">
+                    <input type="email" class="form-control" id="inputEmail" name="username">
                 </div>
             </div>
 

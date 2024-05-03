@@ -6,6 +6,7 @@ import com.prj1.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,14 +34,19 @@ public class MemberController {
 
 
     @GetMapping("/login")
-    public void loginGet(){
+    public String loginGet(){
 
+        return "member/login";
     }
 
+    /*
     @PostMapping("/login")
     public String loginPost(Member member,Model model, HttpServletRequest req){
 
         HttpSession session = req.getSession();
+
+
+
 
         Member loginMember = service.loginMember(member);
 
@@ -58,6 +64,7 @@ public class MemberController {
         return "redirect:/";
     }
 
+     */
 
     @GetMapping("/list")
     public void listGet(Model model){
@@ -74,9 +81,13 @@ public class MemberController {
     }
 
     @PostMapping("/delete")
-    public String delete(Integer id){
+    public String delete(Integer id, Authentication authentication, HttpServletRequest req){
 
-        service.deleteMember(id);
+        if(service.hasAccess(id, authentication)){
+            service.deleteMember(id);
+            HttpSession session = req.getSession();
+            session.invalidate();
+        }
 
         return "redirect:/member/list";
     }
@@ -89,12 +100,14 @@ public class MemberController {
 
 
     @PostMapping("/update")
-    public String update(Member member, RedirectAttributes rttr){
+    public String update(Member member, Authentication authentication, RedirectAttributes rttr){
 
-        service.updateMember(member);
+        if(service.hasAccess(member.getId(), authentication)){
+
+            service.updateMember(member);
+        }
 
         rttr.addAttribute("id", member.getId());
-
 
         return "redirect:/member/info";
     }

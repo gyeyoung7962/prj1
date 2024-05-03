@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -15,7 +16,7 @@
 
 
     <div class="col-md-2"></div>
-    <div class="row col-md-8" style="margin: 0 auto;">
+    <div class="row col-md-12" style="margin: 0 auto;">
         <h3>회원 정보 조회</h3>
         <hr/>
         <div class="card">
@@ -64,7 +65,14 @@
                             ${member.regDate}
                         </div>
                     </div>
-                    <a href="/member/update?id=${member.id}"><button class="btn btn-primary">수정</button></a>
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal.member" var="authmember"/>
+                        <c:if test="${member.id eq authmember.id}">
+                            <a href="/member/update?id=${member.id}">
+                                <button class="btn btn-primary">수정</button>
+                            </a>
+                        </c:if>
+                    </sec:authorize>
                     <button id="back" class="btn btn-warning" onclick="window.history.back();">뒤로</button>
                 </div>
             </div>

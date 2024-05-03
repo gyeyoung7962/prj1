@@ -33,6 +33,7 @@
             </tr>
         </c:if>
         <c:forEach items="${list}" var="list" varStatus="status">
+            <c:set var="num" value="${pageInfo.totalCount}"/>
             <tr>
                 <td>${list.id}</td>
                 <td>

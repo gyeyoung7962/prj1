@@ -43,22 +43,26 @@
                             </div>
                         </div>
 
+                        <p class="text-danger">암호를 입력하지않으면 기존 암호로 유지합니다</p>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>비밀번호</label>
                             </div>
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password" id="password"
-                                       value="${member.password}">
+                                       value="">
                             </div>
                         </div>
+
+
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>비밀번호 확인</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="password" class="form-control" id="passwordChk"
+                                <input type="password" class="form-control" id="passwordChk" value=""
                                        onkeyup="pw_chk()">
                             </div>
                         </div>
@@ -86,7 +90,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12" style="text-align: center">
-                                <button id="modifyBtn" class="btn btn-primary" disabled>수정</button>
+                                <button id="modifyBtn" class="btn btn-primary">수정</button>
                                 <button type="reset" class="btn btn-danger">취소</button>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ public class AppConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable());
-        http.formLogin(login -> login.loginPage("/login"));
+        http.formLogin(login -> login.loginPage("/member/login"));
         return http.build();
     }
 

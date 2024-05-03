@@ -39,7 +39,7 @@
                               style="resize: none;" required></textarea>
                 </div>
             </div>
-
+<%--
             <div class="row mb-2" style="margin: 0 auto;">
                 <div class="col-md-2">
                     <label for="inputWriter" class="text-primary">작성자</label>
@@ -49,6 +49,7 @@
                     <input id="inputWriter" type="text" class="form-control" name="writer" required>
                 </div>
             </div>
+            --%>
 
             <div class="row mb-2" style="margin: 0 auto;">
                 <div class="col-md-12" style="text-align: right;">

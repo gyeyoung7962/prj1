@@ -4,6 +4,7 @@ package com.prj1.controller;
 import com.prj1.domain.Board;
 import com.prj1.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,12 +30,14 @@ public class BoardController {
     }
 
     @PostMapping("/add")
-    public String addPost(Board board, RedirectAttributes rttr) {
+    //글 작성시 게시글정보를 board에 바인딩, 로그인한 사용자정보를 authentication에 담기
+    public String addPost(Board board, Authentication authentication, RedirectAttributes rttr) {
 
-        System.out.println("board = " + board);
+
+        service.add(board, authentication);
+
 
         rttr.addAttribute("id", board.getId());
-        service.add(board);
 
 //        return "redirect:/board/read?id="+board.getId();
         return "redirect:/board/list";
@@ -59,9 +63,13 @@ public class BoardController {
     }
 
     @PostMapping("/delete")
-    public String delete(Integer id){
+    public String delete(Integer id, Authentication authentication){
 
-        service.deleteBoard(id);
+        if(service.hasAccess(id, authentication)){
+            service.deleteBoard(id);
+        }
+
+
         return "redirect:/board/list";
     }
 
@@ -72,9 +80,12 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String postUpdate(Board board){
+    public String postUpdate(Board board, Authentication authentication){
 
-        service.boardUpdate(board);
+        if(service.hasAccess(board.getId(), authentication)){
+
+            service.boardUpdate(board);
+        }
 
         return "redirect:/board/list";
     }

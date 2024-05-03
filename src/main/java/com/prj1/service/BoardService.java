@@ -2,8 +2,11 @@ package com.prj1.service;
 
 
 import com.prj1.domain.Board;
+import com.prj1.domain.CustomUser;
+import com.prj1.domain.Member;
 import com.prj1.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +21,16 @@ public class BoardService {
 
     private final BoardMapper mapper;
 
-    public void add(Board board) {
+    public void add(Board board, Authentication authentication) {
 
+        System.out.println("service add");
+        System.out.println("사용자정보:" + authentication.getPrincipal());
+
+        Object principal = authentication.getPrincipal();
+        if(principal instanceof CustomUser user){
+            Member member = user.getMember();
+            board.setMemberId(member.getId());
+        }
         mapper.insert(board);
     }
 
@@ -60,7 +71,8 @@ public class BoardService {
                                             "currentEndPage", currentEndPage,
                                             "currentStartPage", currentStartPage,
                                             "prevPageNumber", prevPageNumber,
-                                            "nextPageNumber", nextPageNumber
+                                            "nextPageNumber", nextPageNumber,
+                                            "totalCount", numberOfBoard
                                             )
                         );
     }
@@ -73,5 +85,23 @@ public class BoardService {
     public void deleteBoard(Integer id) {
 
         mapper.deleteBoard(id);
+    }
+
+    public boolean hasAccess(Integer id, Authentication authentication) {
+
+        if(authentication == null){
+            return false;
+        }
+
+        Board board = mapper.selectOne(id);
+
+        Object principal = authentication.getPrincipal();
+        if(principal instanceof CustomUser user){
+            Member member = user.getMember();
+
+            return board.getMemberId().equals(member.getId());
+        }
+
+        return false;
     }
 }

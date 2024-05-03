@@ -11,4 +11,5 @@ public class Board {
     private String content;
     private String writer;
     private LocalDateTime regDate;
+    private Integer memberId;
 }
