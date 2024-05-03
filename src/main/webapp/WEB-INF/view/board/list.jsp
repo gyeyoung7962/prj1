@@ -4,13 +4,15 @@
 <html>
 <head>
     <title>전체 게시물 조회</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+          integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
-<div class="row container col-md-6" style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
-
-
+<div class="row container col-md-8"
+     style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
     <h3>전체 게시물 조회</h3>
     <hr/>
 
@@ -24,14 +26,18 @@
         </tr>
         </thead>
         <tbody>
+
+        <c:if test="${list == null}">
+            <tr>
+                <td colspan="4">조회가 불가능합니다</td>
+            </tr>
+        </c:if>
         <c:forEach items="${list}" var="list" varStatus="status">
             <tr>
-                <c:if test="${list == null}">
-                    <td colspan="4">조회가 불가능합니다</td>
-                </c:if>
                 <td>${list.id}</td>
                 <td>
-                    <a href="/board/read?id=${list.id}" style="text-decoration: none;">${list.title}</a>
+                    <a href="/board/read?id=${list.id}"
+                       style="text-decoration: none;">${list.title}</a>
                 </td>
                 <td>${list.writer}</td>
                 <td>
@@ -48,23 +54,53 @@
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <c:if test="${pageInfo.currentPage > 1}">
+                    <c:url var="firstPageLink" value="/board/list">
+                        <c:param name="page" value="1"/>
+                    </c:url>
+                    <li class="page-item">
+                        <a class="page-link" href="${firstPageLink}">&laquo;</a>
+                    </li>
+                </c:if>
 
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
+                <c:if test="${pageInfo.prevPageNumber > 0}">
+                    <c:url value="/board/list" var="prevPageLink">
+                        <c:param name="page" value="${pageInfo.prevPageNumber}"/>
+                    </c:url>
+
+                    <li class="page-item">
+                        <a class="page-link" href="${prevPageLink}">&lt;</a>
+                    </li>
+                </c:if>
+
+
+                <c:forEach begin="${pageInfo.currentStartPage}" end="${pageInfo.currentEndPage}" var="page">
+                    <c:url var="pageLink" value="/board/list">
+                        <c:param name="page" value="${page}"/>
+                    </c:url>
+                    <li class="page-item ${pageInfo.currentPage eq page ? 'active' : ''}">
+                        <a class="page-link" href="${pageLink}">${page}</a>
+                    </li>
+                </c:forEach>
+
+                <c:if test="${pageInfo.nextPageNumber < pageInfo.lastPageNumber}">
+                    <c:url value="/board/list" var="nextPageLink">
+                        <c:param name="page" value="${pageInfo.nextPageNumber}"/>
+                    </c:url>
+                    <li class="page-item">
+                        <a class="page-link" href="${nextPageLink}">&gt;</a>
+                    </li>
+                </c:if>
+
+
+                <c:if test="${pageInfo.currentPage < pageInfo.lastPageNumber}">
+                    <c:url var="lastPageLink" value="/board/list">
+                        <c:param name="page" value="${pageInfo.lastPageNumber}"/>
+                    </c:url>
+                    <li class="page-item">
+                        <a class="page-link" href="${lastPageLink}">>></a>
+                    </li>
+                </c:if>
             </ul>
         </nav>
     </div>
@@ -83,7 +119,8 @@
         </div>
 
         <div class="col-md-6">
-            <input type="text" class="form-control col-md-6" aria-label="Text input with segmented dropdown button">
+            <input type="text" class="form-control col-md-6"
+                   aria-label="Text input with segmented dropdown button">
         </div>
 
         <div class="col-md-2">
@@ -95,6 +132,9 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
+

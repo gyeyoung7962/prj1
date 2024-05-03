@@ -38,3 +38,14 @@ from member;
 select count(*)
 from member
 where email = 'test1@naver.com';
+
+insert into board(title, content, writer)  (select title,content,writer from board);
+
+insert into board(title,content,writer)
+values ('첫글입니다', 'ㅇㅇㅇㅇ', '테스트');
+
+
+select *
+from board;
+
+alter table board auto_increment = 1;

@@ -9,10 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -37,7 +36,7 @@ public class BoardController {
         service.add(board);
 
 //        return "redirect:/board/read?id="+board.getId();
-        return "redirect:/board/read";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/read")
@@ -53,15 +52,9 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String listBoard(Model model){
+    public String listBoard(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model){
 
-        //게시물 목록 조회(select)
-        List<Board> list = service.boardList();
-
-        //모델에 넣고
-        model.addAttribute("list", list);
-        //jsp로 포워드
-
+        model.addAllAttributes(service.boardList(page));
         return "board/list";
     }
 

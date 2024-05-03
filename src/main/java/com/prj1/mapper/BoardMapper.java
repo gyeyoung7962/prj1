@@ -27,8 +27,9 @@ public interface BoardMapper {
             select *
             from board
             order by id desc
+            limit #{offset},10
             """)
-    List<Board> list();
+    List<Board> list(Integer offset);
 
     @Delete("""
             delete from
@@ -43,4 +44,10 @@ public interface BoardMapper {
             where id = #{id}
 """)
     void updateBoard(Board board);
+
+    @Select("""
+            select count(*)
+            from board
+            """)
+    int totalCount();
 }

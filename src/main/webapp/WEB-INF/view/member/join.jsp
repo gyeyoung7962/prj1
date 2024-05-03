@@ -62,7 +62,7 @@
         </div>
         <div class="row mb-3" style="text-align:right;">
             <div class="col-md-12">
-                <button class="btn btn-success">확인</button>
+                <button id="joinBtn" class="btn btn-success">확인</button>
                 <button class="btn btn-danger" type="reset">취소</button>
             </div>
 
@@ -89,9 +89,11 @@
                 if (result == 0) {
                     $(".email_msg").removeClass("alert alert-danger");
                     $(".email_msg").html("사용가능한 이메일입니다").addClass("alert alert-primary").show();
+                    $("#joinBtn").attr("disabled", false);
                 } else if (result == 1) {
                     $(".email_msg").removeClass("alert alert-primary");
                     $(".email_msg").html("사용 불가능한 이메일입니다").addClass("alert alert-danger").show();
+                    $("#joinBtn").attr("disabled", true);
                 }
             }
         });
