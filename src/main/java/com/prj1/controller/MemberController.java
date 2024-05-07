@@ -6,6 +6,7 @@ import com.prj1.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,18 +67,26 @@ public class MemberController {
 
      */
 
+    //회원 리스트 조회
     @GetMapping("/list")
+    @PreAuthorize("hasAnyAuthority('admin')") //권한이 admin 회원만 접근가능
     public void listGet(Model model){
 
         model.addAttribute("list",service.memberList());
     }
 
+    //회원정보 조회
     @GetMapping("/info")
-    public void infoGet(Integer id,Model model){
+    public String infoGet(Integer id,Model model, Authentication authentication){
 
-        Member member = service.infoMember(id);
+        //id와 시큐리티의 회원정보를 통해 접근가능한지 boolean타입으로 반환하거나 타입이 admin이면
+        if(service.hasAccess(id, authentication) || service.isAdmin(authentication)){
 
-        model.addAttribute("member", member);
+            Member member = service.infoMember(id); //회원 아이디로 정보를 조회
+            model.addAttribute("member", member);
+            return "member/info";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/delete")

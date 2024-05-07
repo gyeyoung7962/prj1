@@ -93,13 +93,14 @@ public class BoardService {
             return false;
         }
 
-        Board board = mapper.selectOne(id);
+        Board board = mapper.selectOne(id); //게시글의 정보를 가져옴
 
-        Object principal = authentication.getPrincipal();
-        if(principal instanceof CustomUser user){
-            Member member = user.getMember();
+        Object principal = authentication.getPrincipal(); //사용자정보를 principal에 담기
+        if(principal instanceof CustomUser user){ // CustomUser에 타입이면
+            Member member = user.getMember();  //CustomUser에서 변수로 지정한 Mmeber변수의 정보를 생성할때 입력받았으므로 member변수에는 사용자정보가 있고 그걸 토대로 Member변수에 넣는다
 
-            return board.getMemberId().equals(member.getId());
+
+            return board.getMemberId().equals(member.getId()); // 게시글의 아이디와 맴버의 아이디값이 같으면 true를 리턴
         }
 
         return false;

@@ -67,4 +67,13 @@ public interface MemberMapper {
             """
     )
     Member selectByEmail(String email);
+
+
+
+    @Select("""
+            select name
+            from  authority
+            where member_id = #{member_id}
+            """)
+    List<String> selectAuthorityByMemberId(Integer memberId);
 }

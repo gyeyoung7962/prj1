@@ -33,6 +33,15 @@ public class BoardController {
     //글 작성시 게시글정보를 board에 바인딩, 로그인한 사용자정보를 authentication에 담기
     public String addPost(Board board, Authentication authentication, RedirectAttributes rttr) {
 
+        if(authentication == null){
+
+            return "redirect:/member/login";
+        }
+
+
+        System.out.println("authentication = " + authentication);
+        System.out.println("principal"+authentication.getPrincipal());
+        System.out.println(authentication.getName());
 
         service.add(board, authentication);
 
@@ -65,8 +74,8 @@ public class BoardController {
     @PostMapping("/delete")
     public String delete(Integer id, Authentication authentication){
 
-        if(service.hasAccess(id, authentication)){
-            service.deleteBoard(id);
+        if(service.hasAccess(id, authentication)){ //값이 true이면
+            service.deleteBoard(id); //삭제
         }
 
 

@@ -34,9 +34,11 @@
                     <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
-                </li>
+                <sec:authorize access="hasAuthority('admin')">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
+                    </li>
+                </sec:authorize>
             </ul>
 
             <div class="navbar">
@@ -56,7 +58,8 @@
                     <sec:authorize access="isAuthenticated()">
                         <sec:authentication property="principal.member" var="member"/>
                         <li class="nav-item">
-                            <a class="nav-link text-white fs-6" href="/member/info?id=${login.id}">${member.nickName}</a>
+                            <a class="nav-link text-white fs-6"
+                               href="/member/info?id=${member.id}">${member.nickName}</a>
                         </li>
 
 
