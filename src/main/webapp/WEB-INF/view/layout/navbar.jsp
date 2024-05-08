@@ -38,8 +38,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-white fs-6" href="/member/list">회원목록</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white fs-6" href="/product/add">상품등록</a>
+                    </li>
                 </sec:authorize>
             </ul>
+
 
             <div class="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">

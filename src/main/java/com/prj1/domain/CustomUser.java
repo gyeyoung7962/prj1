@@ -18,7 +18,7 @@ public class CustomUser extends User {
         //User를 상속받으므로 부모생성자를 호출
         //회원의 이메일, 비밀번호, 권한을 토대로 User생성자 생성
         //member.getAuthority().stream().map(SimpleGrantedAuthority::new).toList()
-        //-> 컬렉션타입이 list인 회원의 권한을 받아와 스트림으로 변환하여 SimpleGrantedAuthority객체에 매핑시키고 매핑시킨 권한목록을 반환
+        //-> 컬렉션타입이 list인 회원의 권한을 받아와 스트림으로 변환하여 SimpleGrantedAuthority객체에 매핑하여 권한을 담고 매핑시킨 권한목록을 반환
         super(member.getEmail(), member.getPassword(), member.getAuthority().stream().map(SimpleGrantedAuthority::new).toList());
 
         //필요한 회원정보를 뽑아오기 위해 member변수에 정보를 담는다
