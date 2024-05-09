@@ -13,13 +13,22 @@
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
 
 
-<div class="container col-md-6"
-     style="position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
+<div class="container col-md-6 mt-5">
+    <%--    style="position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);"--%>
 
     <h3 style="text-align: left;">상품 추가</h3>
     <hr/>
 
-    <form action="/product/add" method="post">
+    <form action="/product/add" method="post" enctype="multipart/form-data">
+
+        <div class="row mb-2">
+
+            <label for="InputImage">이미지</label>
+                <img id="previewImg"
+                     style="border:1px solid black;max-width: 100%; max-height: 500px; width: 100%; height: 100%; object-fit: cover;">
+                <input type="file" class="form-control" name="file" id="InputImage" value="">
+        </div>
+
         <div class="row mb-2">
             <div class="col-md-3">
                 <label class="form-label" for="InputName">상품명</label>
@@ -42,9 +51,10 @@
             </div>
 
             <div class="col-md-3 mb-2">
-                <select id="selectSubCategoryId" class="form-control" name="categoryId">
+                <select id="selectSubCategoryId" class="form-control" name="subCategoryId">
                     <c:forEach items="${subCategoryList}" var="sublist">
-                        <option class="category${sublist.parentCategoryId}" value="${sublist.subCategoryId}">${sublist.subCategoryName}</option>--%>
+                        <option class="category${sublist.parentCategoryId}"
+                                value="${sublist.subCategoryId}">${sublist.subCategoryName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -72,13 +82,13 @@
         </div>
 
 
-
         <div class="row mb-2">
             <div class="col-md-3">
                 <label for="InputInfo">상세정보</label>
             </div>
             <div class="col-md-9">
-                <textarea class="form-control" cols="15" rows="15" id="InputInfo" name="content" style="resize: none;"></textarea>
+                <textarea class="form-control" cols="15" rows="15" id="InputInfo" name="content"
+                          style="resize: none;"></textarea>
             </div>
         </div>
 
@@ -97,9 +107,9 @@
         const selected = document.querySelectorAll("#selectSubCategoryId > option.category" + parentId);// 중분류에있는 옵션값부모아이디 조회
         const selectedAll = document.querySelectorAll("#selectSubCategoryId > option");
 
-        // console.log(parentId)
-        console.log("==select==="+selected);
-        // console.log(selectedAll)
+        console.log("==parentId==" + parentId);
+        console.log("==select===" + selected);
+        console.log(selectedAll)
 
         for (let s of selectedAll) {
             s.classList.add("d-none")
@@ -108,6 +118,24 @@
             s.classList.remove("d-none");
         }
     }
+
+    let previewImg = $("#previewImg");
+    let inputImg = $("#InputImage");
+
+    inputImg.on("change", function (e) {
+
+        const file = e.target.files[0];
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            previewImg.attr("src", e.target.result);
+        }
+        reader.readAsDataURL(file);
+
+    });
+
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
