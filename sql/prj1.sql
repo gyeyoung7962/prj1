@@ -115,14 +115,16 @@ group by b.id;
 
 create table product(
     id int auto_increment primary key comment '빈번호',
+    image varchar(1000) not null comment '이미지',
     name varchar(50) not null unique comment '상품이름',
     price int not null comment '상품가격',
     quantity int default 0 comment '수량',
     stock int default 0 comment '재고수량',
     content varchar(2000) comment '상품설명',
     regDate datetime default now() comment '등록일',
-    category_id int references category(category_id)
+    subCategory_id int references subCategory(subCategory_id)
 );
+# product에 subcategory_id도 참조해야하는지?
 
 create table category(
 
@@ -177,7 +179,32 @@ from category c join subCategory s
 on c.category_id = s.parent_category_id
 where c.category_id =1;
 
-
 select *
 from subCategory
 order by parent_category_id, subCategory_id;
+
+
+
+select p.image, p.name, p.price, p.stock, c.category_name, s.subCategory_name
+from product p join subCategory s
+on p.subCategory_id = s.subCategory_id
+join category c
+on c.category_id = s.parent_category_id
+where c.category_id = 2
+order by c.category_id, s.subCategory_id;
+
+
+
+
+select *
+from category;
+select *
+from subCategory;
+
+select *
+from product;
+
+
+
+
+

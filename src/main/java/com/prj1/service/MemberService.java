@@ -31,10 +31,7 @@ public class MemberService {
         mapper.insertMember(member);
     }
 
-    public List<Member> memberList() {
 
-        return mapper.memberList();
-    }
 
     public Member infoMember(Integer id) {
 

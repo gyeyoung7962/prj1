@@ -26,23 +26,7 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    @GetMapping("/add")
-    @PreAuthorize("hasAnyAuthority('admin')")
-    public void getAdd(Model model){
 
-        List<Category> categoryList = categoryService.categoryList();
-
-//        categoryList.forEach(System.out::println);
-
-        model.addAttribute("categoryList", categoryList);
-
-        List<SubCategory> subList = categoryService.subCategoryList();
-
-        model.addAttribute("subCategoryList", subList);
-
-//        subList.forEach(System.out::println);
-
-    }
 
     @PostMapping("/add")
     public String postAdd(Product product, MultipartFile file) throws Exception{

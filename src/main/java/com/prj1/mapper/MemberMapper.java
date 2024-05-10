@@ -17,12 +17,6 @@ public interface MemberMapper {
             """)
     void insertMember(Member member);
 
-    @Select("""
-            select *
-            from member
-            order by id desc
-            """)
-    List<Member> memberList();
 
     @Select("""
             select *

@@ -67,13 +67,7 @@ public class MemberController {
 
      */
 
-    //회원 리스트 조회
-    @GetMapping("/list")
-    @PreAuthorize("hasAnyAuthority('admin')") //권한이 admin 회원만 접근가능
-    public void listGet(Model model){
 
-        model.addAttribute("list",service.memberList());
-    }
 
     //회원정보 조회
     @GetMapping("/info")
