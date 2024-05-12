@@ -204,6 +204,10 @@ from subCategory;
 select *
 from product;
 
+select *
+from subCategory
+where parent_category_id = 1;
+
 
 
 

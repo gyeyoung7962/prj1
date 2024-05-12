@@ -23,4 +23,9 @@ public class CategoryService{
     public List<SubCategory> subCategoryList() {
         return mapper.subCategoryList();
     }
+
+    public void addCategory(String categoryName) {
+
+        mapper.addCategory(categoryName);
+    }
 }

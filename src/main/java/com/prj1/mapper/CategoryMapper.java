@@ -3,6 +3,7 @@ package com.prj1.mapper;
 
 import com.prj1.domain.Category;
 import com.prj1.domain.SubCategory;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -24,4 +25,11 @@ public interface CategoryMapper {
             order by parent_category_id, subCategory_id
             """)
     List<SubCategory> subCategoryList();
+
+    @Insert("""
+            insert into category(category_name)
+            value (#{categoryName})
+            
+            """)
+    void addCategory(String categoryName);
 }

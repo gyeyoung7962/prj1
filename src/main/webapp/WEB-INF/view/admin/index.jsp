@@ -35,7 +35,7 @@
                     <a href="/admin/addProduct" class="btn">상품추가</a>
                 </li>
                 <li>
-                    <a href="/admin/catgory" class="btn">카테고리 설정</a>
+                    <a href="/admin/categorySetting" class="btn">카테고리 설정</a>
                 </li>
             </ul>
         </div>

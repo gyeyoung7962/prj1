@@ -23,13 +23,31 @@
 
         <div class="row mb-2">
 
-            <label for="InputImage">이미지</label>
-                <img id="previewImg"
-                     style="border:1px solid black;max-width: 100%; max-height: 500px; width: 100%; height: 100%; object-fit: cover;">
-                <input type="file" class="form-control" name="file" id="InputImage" value="">
+            <div class="col-md-4">
+                <label for="InputImage">대표이미지</label>
+                <div style="width: 300px; height:300px; position: relative;">
+                    <img id="previewImg"
+                         style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
+                    <input type="file" class="form-control" name="file" id="InputImage" value=""
+                           style="position: absolute; top:100%; left:50%; transform: translate(-50%, -50%);">
+                </div>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-6">
+                <label for="InputImage">이미지</label>
+                <div style="width: 100px; height:100px; position: relative;">
+                    <img id="previewSubImg"
+                         style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
+                    <input type="file" class="form-control" name="file" id="InputSubImage" value=""
+                           style="position: absolute; top:100%; left:50%; transform: translate(-50%, -50%);">
+                </div>
+
+            </div>
         </div>
 
-        <div class="row mb-2">
+        <div class="row mt-5 mb-2">
             <div class="col-md-3">
                 <label class="form-label" for="InputName">상품명</label>
             </div>
@@ -102,38 +120,40 @@
     </form>
 </div>
 <script>
-    function showSubCategory() {
-        const parentId = document.querySelector("#selectCategoryId").value; //선택한 카테고리 값
-        const selected = document.querySelectorAll("#selectSubCategoryId > option.category" + parentId);// 중분류에있는 옵션값부모아이디 조회
-        const selectedAll = document.querySelectorAll("#selectSubCategoryId > option");
+  function showSubCategory() {
+    const parentId = document.querySelector("#selectCategoryId").value; //선택한 카테고리 값
+    const selected = document.querySelectorAll("#selectSubCategoryId > option.category" + parentId);// 중분류에있는 옵션값부모아이디 조회
+    const selectedAll = document.querySelectorAll("#selectSubCategoryId > option");
 
-        console.log("==parentId==" + parentId);
-        console.log("==select===" + selected);
-        console.log(selectedAll)
+    console.log("==parentId==" + parentId);
+    console.log("==select===" + selected);
+    console.log(selectedAll)
 
-        for (let s of selectedAll) {
-            s.classList.add("d-none")
-        }
-        for (let s of selected) {
-            s.classList.remove("d-none");
-        }
+    for (let s of selectedAll) {
+      s.classList.add("d-none")
     }
+    for (let s of selected) {
+      s.classList.remove("d-none");
+    }
+  }
 
-    let previewImg = $("#previewImg");
-    let inputImg = $("#InputImage");
+  let previewImg = $("#previewImg");
+  let inputImg = $("#InputImage");
 
-    inputImg.on("change", function (e) {
+  inputImg.on("change", function (e) {
 
-        const file = e.target.files[0];
+    const file = e.target.files[0];
 
-        const reader = new FileReader();
+    $("#InputImage").hide();
 
-        reader.onload = function (e) {
-            previewImg.attr("src", e.target.result);
-        }
-        reader.readAsDataURL(file);
+    const reader = new FileReader();
 
-    });
+    reader.onload = function (e) {
+      previewImg.attr("src", e.target.result);
+    }
+    reader.readAsDataURL(file);
+
+  });
 
 
 </script>
