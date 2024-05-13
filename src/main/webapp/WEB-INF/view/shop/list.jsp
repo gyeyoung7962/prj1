@@ -15,6 +15,7 @@
 
 <div style="display: flex; justify-content: center; height:100%;">
     <div class="container" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
+
         <div class="row" style="justify-content: center;">
             <c:forEach items="${list}" var="list">
                 <div class="text-center justify-content-center"
@@ -28,6 +29,7 @@
                 </div>
             </c:forEach>
         </div>
+
 
     </div>
 </div>

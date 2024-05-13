@@ -68,21 +68,10 @@ where id > 0;
 select *
 from member;
 
+
 desc board;
 desc member;
-
-select *
-from board
-order by id desc;
-
-select *
-from member;
-
-desc member;
 desc authority;
-
-select *
-from authority;
 
 create table authority
 (
@@ -102,20 +91,8 @@ select *
 from member m left join authority a
 on m.id = a.member_id;
 
-
-
-
-
-
-select *
-from board b
-         join member m
-group by b.id;
-
-
 create table product(
     id int auto_increment primary key comment '빈번호',
-    image varchar(1000) not null comment '이미지',
     name varchar(50) not null unique comment '상품이름',
     price int not null comment '상품가격',
     quantity int default 0 comment '수량',
@@ -124,7 +101,6 @@ create table product(
     regDate datetime default now() comment '등록일',
     subCategory_id int references subCategory(subCategory_id)
 );
-# product에 subcategory_id도 참조해야하는지?
 
 create table category(
 
@@ -137,14 +113,6 @@ create table subCategory(
     parent_category_id int references category(category_id),
     subCategory_name varchar(20) not null
 );
-
-drop table product;
-drop table category;
-drop table subCategory;
-
-desc product;
-desc category;
-desc subCategory;
 
 insert into category( category_name)
 values('아우터'),
@@ -185,7 +153,7 @@ order by parent_category_id, subCategory_id;
 
 
 
-select p.image, p.name, p.price, p.stock, c.category_name, s.subCategory_name
+select p.name, p.price, p.stock, c.category_name, s.subCategory_name
 from product p join subCategory s
 on p.subCategory_id = s.subCategory_id
 join category c
@@ -193,22 +161,31 @@ on c.category_id = s.parent_category_id
 where c.category_id = 2
 order by c.category_id, s.subCategory_id;
 
-
-
-
-select *
-from category;
-select *
-from subCategory;
-
-select *
-from product;
-
 select *
 from subCategory
 where parent_category_id = 1;
 
 
 
+drop table product;
+drop table product_img;
+drop table category;
+drop table subCategory;
+
+
+desc product;
+desc product_img;
+
+select *
+from product;
+select *
+from product_img;
+
+create table product_img(
+    id int primary key auto_increment,
+    name varchar(100),
+    path varchar(2000),
+    product_id int references product(id)
+);
 
 
