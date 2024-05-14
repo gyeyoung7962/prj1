@@ -181,11 +181,28 @@ from product;
 select *
 from product_img;
 
+select *
+from product p join product_img i
+on p.id = i.product_id
+where p.id = 2;
+
+select p.name, i.name, i.path as uploadpath, i.is_title_img as "대표사진여부(1대표 2일반)"
+from product p join product_img i
+                    on p.id = i.product_id
+where p.id = 2;
+
+select p.name , pi.path as image
+from product p join product_img pi
+on p.id = pi.product_id and pi.is_title_img = 1;
+
+
+
 create table product_img(
     id int primary key auto_increment,
     name varchar(100),
     path varchar(2000),
-    product_id int references product(id)
+    product_id int references product(id),
+    is_title_img boolean default false
 );
 
 

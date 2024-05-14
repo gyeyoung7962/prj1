@@ -22,28 +22,52 @@ public class ProductService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public void add(Product product, MultipartFile file) throws IOException {
+    public void add(Product product, List<MultipartFile> files) throws IOException {
 
-        System.out.println("productId==="+ product);
         mapper.add(product);
 
         int productId = product.getId();
-        System.out.println("productId==="+ product.getId());
 
-
-
-        ProductImg productImg = new ProductImg();
+        System.out.println("file size"+files.size());
 
         String uploadPath = System.getProperty("user.dir")+"/src/main/resources/static/upload";
-        String fileName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
-        File saveFile = new File(uploadPath, fileName);
-        file.transferTo(saveFile);
 
-        productImg.setProduct_id(productId);
-        productImg.setName(file.getOriginalFilename());
-        productImg.setPath(fileName);
 
-        mapper.addImg(productImg);
+        for(int i = 0; i < files.size();i++){
+
+            String fileName = files.get(i).getOriginalFilename();
+            String filePath = System.currentTimeMillis()+"_"+fileName;
+
+            File saveFile = new File(uploadPath, filePath);
+
+            files.get(i).transferTo(saveFile);
+
+            ProductImg productImg = new ProductImg();
+
+            productImg.setProduct_id(productId);
+            productImg.setName(fileName);
+            productImg.setPath(filePath);
+
+            if(i == 0){
+                productImg.setIsTitleImg(true);
+            }
+            else{
+                productImg.setIsTitleImg(false);
+            }
+
+
+            mapper.addImg(productImg);
+        }
+
+//        String fileName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
+//        File saveFile = new File(uploadPath, fileName);
+//        file.transferTo(saveFile);
+
+//        productImg.setProduct_id(productId);
+//        productImg.setName(file.getOriginalFilename());
+//        productImg.setPath(fileName);
+
+//        mapper.addImg(productImg);
     }
 
 

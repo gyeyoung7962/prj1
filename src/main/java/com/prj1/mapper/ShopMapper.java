@@ -13,8 +13,9 @@ public interface ShopMapper {
 
 
     @Select("""
-            select *
-            from product
+            select p.name , pi.path as image
+            from product p join product_img pi
+            on p.id = pi.product_id and pi.is_title_img = 1;
             """)
     List<Product> shopProductList();
 }

@@ -13,31 +13,6 @@
 
 </head>
 <style>
-    .labelImg {
-        display: inline-block;
-        padding: .5em .75em;
-        color: #337ab7;
-        font-size: inherit;
-        line-height: normal;
-        vertical-align: middle;
-        /*background-color: #337ab7;*/
-        cursor: pointer;
-        border: 1px solid #ebebeb;
-        border-bottom-color: #e2e2e2;
-        border-radius: .25em;
-    }
-
-    input[type="file"] { /* 파일 필드 숨기기 */
-        /*position: absolute;*/
-        /*width: 1px;*/
-        /*height: 1px;*/
-        /*padding: 0;*/
-        /*margin: -1px;*/
-        /*overflow: hidden;*/
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-    }
-
     .ck.ck-editor{
 
         max-width: 1000px;
@@ -62,71 +37,15 @@
 
             <div class="col-md-4">
 
-                <label>대표이미지</label>
+                <label>상품이미지</label>
                 <div style="width: 350px; height:350px; position: relative;">
-                    <img id="previewImg"
-                         style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
-                    <label class="labelImg" for="InputImage"
-                           style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">+
-                    </label>
-                    <input type="file" class="form-control" name="file" id="InputImage" multiple="multiple">
+                    <div id="previewContainer" style="display: flex;"></div>
 
+                    <input type="file" name="files" class="form-control" multiple id="InputImage">
                 </div>
             </div>
 
             <div class="col-md-3"></div>
-
-<%--
-            <div class="col-md-5">
-                <label for="InputSubImage">관련이미지
-                </label>
-
-                <div>
-                    <div class="row mb-4" style="position: relative;">
-                        <div style="width: 150px; height:150px; position: relative;">
-                            <img id="previewSubImg"
-                                 style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
-                            <label class="labelImg" for="InputImage"
-                                   style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">+
-                            </label>
-                            <input type="file" class="form-control" name="file" id="InputSubImage" value="">
-                        </div>
-                        <div style="width: 150px; height:150px; position: relative;">
-                            <img id="previewSubImg"
-                                 style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
-                            <label class="labelImg" for="InputImage"
-                                   style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">+
-                            </label>
-                            <input type="file" class="form-control" name="file" id="InputSubImage" value=""
-                                   style="display: none;">
-                        </div>
-                    </div>
-                    <div class="row mb-4" style="position: relative;">
-                        <div style="width: 150px; height:150px; position: relative;">
-                            <img id="previewSubImg"
-                                 style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
-                            <label class="labelImg" for="InputImage"
-                                   style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">+
-                            </label>
-                            <input type="file" class="form-control" name="file" id="InputSubImage" value=""
-                                   style="display: none;">
-                        </div>
-                        <div style="width: 150px; height:150px; position: relative;">
-                            <img id="previewSubImg"
-                                 style="border:1px solid black; width: 100%; height: 100%; object-fit: cover;">
-                            <label class="labelImg" for="InputImage"
-                                   style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">+
-                            </label>
-                            <input type="file" class="form-control" name="file" id="InputSubImage" value=""
-                                   style="display: none;">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            --%>
-
-
             <div class="row mt-5 mb-2">
                 <div class="col-md-3">
                     <label class="form-label" for="InputName">상품명</label>
@@ -183,16 +102,12 @@
 
             <div class="row mb-2">
                 <div class="col-md-3">
-                    <label for="InputInfo">상세정보</label>
+                    <label>상세정보</label>
                 </div>
                 <div class="col-md-9">
-                    <%--                <textarea class="form-control" cols="15" rows="15" id="InputInfo" name="content"--%>
-                    <%--                          style="resize: none;"></textarea>--%>
                         <textarea name="content" id="editor"></textarea>
                 </div>
             </div>
-
-
             <div class="row col-md-12 justify-content-center">
                 <div class="col-md-6" style="text-align: center;">
                     <button class="btn btn-primary">등록</button>
@@ -230,44 +145,34 @@ const selected = document.querySelectorAll("#selectSubCategoryId > option.catego
     }
   }
 
-  let previewImg = $("#previewImg");
-  let inputImg = $("#InputImage");
+    document.getElementById('InputImage').addEventListener('change', function(event) {
+      // 파일 선택 여부 확인
+      if (event.target.files.length > 0) {
+        // 미리보기 컨테이너 선택
+        var previewContainer = document.getElementById('previewContainer');
 
-  let previewSubImg = $("#previewSubImg");
-  let inputSubImg = $("#InputSubImage");
+        // 선택된 파일들에 대해 미리보기 생성
+        for (var i = 0; i < event.target.files.length; i++) {
+          var file = event.target.files[i];
+          var reader = new FileReader();
 
-  inputImg.on("change", function (e) {
+          console.log(file);
 
-    const file = e.target.files[0];
+          // 파일 읽기 완료 이벤트 리스너 추가
+          reader.onload = function(e) {
+            // 이미지 태그 생성하여 미리보기 추가
+            var imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.style.width = '200px'; // 미리보기 이미지 크기 설정
+            imgElement.style.height = 'auto';
+            previewContainer.appendChild(imgElement);
+          };
 
-    // $(".labelImg").hide();
-
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      previewImg.attr("src", e.target.result);
-    }
-    reader.readAsDataURL(file);
-
-  });
-
-  /*
-  inputSubImg.on("change", function (e) {
-
-    const file = e.target.files[0];
-
-    $("#InputSubImage").hide();
-
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      previewSubImg.attr("src", e.target.result);
-    }
-    reader.readAsDataURL(file);
-
-  });
-
-   */
+          // 파일 읽기 시작
+          reader.readAsDataURL(file);
+        }
+      }
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="

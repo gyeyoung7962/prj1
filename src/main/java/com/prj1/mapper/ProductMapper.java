@@ -27,8 +27,8 @@ public interface ProductMapper {
     List<Product> productList();
 
     @Insert("""
-            insert into product_img(name, path, product_id)
-            values (#{name}, #{path}, #{product_id})
+            insert into product_img(name, path, product_id, is_title_img)
+            values (#{name}, #{path}, #{product_id}, #{isTitleImg})
             """)
     void addImg(ProductImg productImg);
 }

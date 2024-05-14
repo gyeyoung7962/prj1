@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -29,9 +27,10 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public String postAdd(Product product, MultipartFile file) throws Exception{
+    public String postAdd(Product product, List<MultipartFile> files) throws Exception{
 
-        productService.add(product, file);
+
+        productService.add(product, files);
 
         return "redirect:/";
     }

@@ -9,4 +9,5 @@ public class ProductImg {
     private String name;
     private String path;
     private Integer product_id;
+    private Boolean isTitleImg;
 }
