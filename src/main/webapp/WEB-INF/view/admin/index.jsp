@@ -9,6 +9,11 @@
           integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
+<style>
+    ul li{
+        list-style: none;
+    }
+</style>
 <body>
 
 <c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
@@ -33,6 +38,9 @@
                 <hr/>
                 <li>
                     <a href="/admin/addProduct" class="btn">상품추가</a>
+                    <a href="/admin/addProduct" class="btn">상품검색</a>
+                    <a href="/admin/addProduct" class="btn">상품수정</a>
+                    <a href="/admin/addProduct" class="btn">상품삭제</a>
                 </li>
                 <li>
                     <a href="/admin/categorySetting" class="btn">카테고리 설정</a>

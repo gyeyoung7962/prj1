@@ -11,7 +11,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
+<c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 <div class="container col-md-7" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
 
 

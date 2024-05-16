@@ -197,6 +197,43 @@ on p.id = pi.product_id and pi.is_title_img = 1;
 
 
 
+# 대표사진 아닌 일반이미지
+select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
+from product p join product_img pi
+                    on p.id = pi.product_id
+where p.id = 2 and pi.is_title_img =0;
+
+# 대표사진 조회
+select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
+from product p join product_img pi
+on p.id = pi.product_id
+where p.id =2;
+
+select pi.path
+from product p join product_img pi
+on p.id = pi.product_id
+where p.id = 2;
+
+select *
+from product_img
+where product_id = 2;
+
+select p.id, p.name , pi.path as image
+from product p join product_img pi
+                    on p.id = pi.product_id and pi.is_title_img = 1
+order by p.id desc;
+
+
+
+
+
+select * from product;
+select * from product_img;
+
+
+
+
+
 create table product_img(
     id int primary key auto_increment,
     name varchar(100),

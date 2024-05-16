@@ -24,7 +24,7 @@
                         <img src="/upload/${list.image}" class="rounded img-thumbnail"
                              style="width: 200px; height:200px;"
                              alt="...">
-                        <p>${list.name}</p>
+                        <p><a href="/shop/productInfo?id=${list.id}">${list.name}</a></p>
                     </div>
                 </div>
             </c:forEach>

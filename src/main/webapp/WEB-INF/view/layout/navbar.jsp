@@ -29,33 +29,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-white fs-6" aria-current="page" href="/shop/list">쇼핑</a>
-                </li>
-
-
-                <sec:authorize access="hasAuthority('admin')">
+                <ul class="navbar navbar-nav me-auto mb-2 mb-lg-0" style=" width:50%; display:flex; justify-content: center;">
                     <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/admin/memberList">회원목록</a>
+                        <a class="nav-link text-white fs-6" aria-current="page" href="/board/list">게시판</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/admin/addProduct">상품등록</a>
+                        <a class="nav-link text-white fs-6" aria-current="page" href="/shop/list">쇼핑</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white fs-6" href="/admin/index">관리자화면</a>
-                    </li>
-
-
-                </sec:authorize>
-            </ul>
-
+                </ul>
 
             <div class="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -68,6 +50,12 @@
                     <sec:authorize access="not isAuthenticated()">
                         <li class="nav-item">
                             <a class="nav-link text-white fs-6" href="/member/login">로그인</a>
+                        </li>
+                    </sec:authorize>
+
+                    <sec:authorize access="hasAuthority('admin')">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6" href="/admin/index">관리자페이지</a>
                         </li>
                     </sec:authorize>
 
