@@ -152,20 +152,19 @@
 
 
         <div class="row cont" id="tab1">
-
-
             <textarea class="form-control-plaintext" id="editor">${product.content}</textarea>
         </div>
 
 
-        <div class="cont" id="tab2">
-            상품평
-            <hr/>
+        <div class="cont container" id="tab2">
+
 
             <div class="row col-md-8" style="margin:0 auto;">
-
+                상품평
+                <hr/>
                 <div class="col-md-8" style="vertical-align: center;">
-                    <textarea class="star_box form-control" placeholder="리뷰 내용을 작성해주세요." style="resize: none;"></textarea>
+                        <textarea class="star_box form-control" placeholder="리뷰 내용을 작성해주세요."
+                                  id="reviewContent" style="resize: none;"></textarea>
                 </div>
 
                 <div class="col-md-4">
@@ -176,12 +175,12 @@
                         <a href="#" value="4">★</a>
                         <a href="#" value="5">★</a>
                     </p>
-                    <input type="submit" class="btn btn-primary" value="리뷰 등록"/>
-
+                    <input type="submit" class="btn btn-primary" onclick="addReview()" value="리뷰 등록"/>
                 </div>
-                <script>
-                  console.log($("#star a").val());
-                </script>
+
+
+
+
             </div>
         </div>
 
@@ -196,6 +195,39 @@
 </div>
 
 <script>
+
+  let ratingVal = 0;
+
+  $('#star a').click(function () {
+    $(this).parent().children("a").removeClass("on");
+    $(this).addClass("on").prevAll("a").addClass("on");
+    ratingVal = $(this).attr("value");
+  });
+
+  function addReview() {
+    $.post({
+      url: "/shop/productReview",
+      data: {
+        // rating: $("#star a").val(),
+        rating: ratingVal,
+        content: $("#reviewContent").val(),
+        productId: ${product.id},
+      },
+      success: function () {
+
+        alert("리뷰등록");
+        // categoryList();
+      },
+      error: function (error) {
+        console.log("요청에러 =" + error);
+      }
+    });
+  }
+
+
+
+
+
 
 
   ClassicEditor
@@ -261,11 +293,7 @@
   });
 
 
-  $('#star a').click(function () {
-    $(this).parent().children("a").removeClass("on");
-    $(this).addClass("on").prevAll("a").addClass("on");
-    console.log($(this).attr("value"));
-  });
+
 
 </script>
 

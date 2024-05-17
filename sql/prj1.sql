@@ -242,4 +242,20 @@ create table product_img(
     is_title_img boolean default false
 );
 
+show tables;
+select *
+from product;
 
+create table product_review(
+    id int primary key auto_increment,
+    writer varchar(50),
+    content varchar(2000) not null,
+    rating int not null,
+    product_id int references product (id),
+    member_id int references member(id),
+    regDate datetime default now()
+);
+
+select pr.content, pr.rating, pr.writer
+from product_review pr join product p
+on pr.product_id = p.id;

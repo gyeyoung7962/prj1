@@ -1,10 +1,10 @@
 package com.prj1.service;
 
 
-import com.prj1.domain.Product;
-import com.prj1.domain.ProductImg;
+import com.prj1.domain.*;
 import com.prj1.mapper.ShopMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,5 +41,24 @@ public class ShopService {
     public List<ProductImg> selectSubImageList(Integer id) {
 
         return mapper.selectSubImageList(id);
+    }
+
+    public void addReview(ProductReview review, Authentication authentication) {
+
+        if(authentication == null){
+            return;
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof CustomUser user) {
+
+            Member member = user.getMember();
+            review.setMemberId(member.getId());
+            review.setWriter(member.getNickName());
+            mapper.addReview(review);
+        }
+
+
     }
 }

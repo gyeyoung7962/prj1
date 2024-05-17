@@ -41,8 +41,12 @@ public class ProductController {
         List<Product> list = productService.productList();
 
         model.addAttribute("list", list);
-
     }
+
+
+
+
+
 
 
 }

@@ -3,6 +3,8 @@ package com.prj1.mapper;
 
 import com.prj1.domain.Product;
 import com.prj1.domain.ProductImg;
+import com.prj1.domain.ProductReview;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -48,4 +50,10 @@ public interface ShopMapper {
             where product_id = #{id} and is_title_img =0;
             """)
     List<ProductImg> selectSubImageList(Integer id);
+
+    @Insert("""
+            insert into product_review(writer, content, rating, product_id, member_id)
+            values(#{writer}, #{content}, #{rating}, #{productId}, #{memberId})
+            """)
+    void addReview(ProductReview review);
 }

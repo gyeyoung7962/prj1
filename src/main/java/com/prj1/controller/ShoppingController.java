@@ -2,13 +2,13 @@ package com.prj1.controller;
 
 import com.prj1.domain.Product;
 import com.prj1.domain.ProductImg;
+import com.prj1.domain.ProductReview;
 import com.prj1.service.ShopService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +48,16 @@ public class ShoppingController {
         model.addAttribute("productImg", productImg);
         model.addAttribute("mainImage", mainImage);
         model.addAttribute("subImageList", subImageList);
-
-
     }
+
+    @PostMapping("/productReview")
+    public String addReview(ProductReview review, Authentication authentication){
+
+        service.addReview(review, authentication);
+
+        return "redirect:/shop/productInfo?id="+review.getProductId();
+    }
+
+
 
 }
