@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -35,8 +36,8 @@
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
-<div class="container" style="position: absolute; top:40%; left:50%; transform:translate(-50%, -50%);">
-
+<%--<div class="container" style="position: absolute; top:40%; left:50%; transform:translate(-50%, -50%);">--%>
+<div class="container mt-5">
     <div class="row col-md-10" style="margin: 0 auto;">
 
         <div class="row">
@@ -132,7 +133,8 @@
                 <li class="nav-item" role="presentation">
                     <a href="#tab2" class="nav-link tabBtn" data-bs-toggle="pill" data-bs-target="#pills-profile"
                        type="button"
-                       role="tab" aria-controls="pills-profile" aria-selected="false">상품평
+                       role="tab" aria-controls="pills-profile" aria-selected="false" id="productCount">
+                        상품평(${reviewCount})
                     </a>
                 </li>
             </div>
@@ -145,8 +147,6 @@
                     </a>
                 </li>
             </div>
-
-
         </ul>
         <hr/>
 
@@ -159,9 +159,14 @@
         <div class="cont container" id="tab2">
 
 
-            <div class="row col-md-8" style="margin:0 auto;">
-                상품평
+            <div class="row col-md-12" style="margin:0 auto;">
+                <p id="reviewAvgScore" style="color:red;">평점</p>
                 <hr/>
+                <div class="row">
+                    <div class="row" id="reviewArea">
+
+                    </div>
+                </div>
                 <div class="col-md-8" style="vertical-align: center;">
                         <textarea class="star_box form-control" placeholder="리뷰 내용을 작성해주세요."
                                   id="reviewContent" style="resize: none;"></textarea>
@@ -177,10 +182,6 @@
                     </p>
                     <input type="submit" class="btn btn-primary" onclick="addReview()" value="리뷰 등록"/>
                 </div>
-
-
-
-
             </div>
         </div>
 
@@ -196,6 +197,57 @@
 
 <script>
 
+  reviewList();
+  reviewAvgScore();
+
+
+  function reviewList() {
+
+    $.get({
+      url: "/shop/reviewList",
+      data: {
+        productId: ${product.id}
+      },
+      success: function (result) {
+
+        let ratingText = "";
+
+
+        $(result).each((key, value) => {
+
+          if (value.rating == 1) {
+            ratingText = "★";
+          } else if (value.rating == 2) {
+            ratingText = "★★";
+          } else if (value.rating == 3) {
+            ratingText = "★★★";
+          } else if (value.rating == 4) {
+            ratingText = "★★★★";
+          } else if (value.rating == 5) {
+            ratingText = "★★★★★";
+          }
+
+          let rawDate = new Date(value.regDate);
+
+          let formattedDate = String(rawDate.getFullYear()).slice(-2) + '/' +
+            String(rawDate.getMonth() + 1).padStart(2, '0') + '/' +
+            String(rawDate.getDate()).padStart(2, '0');
+
+          $("#reviewArea").append(
+            '<div class="col-md-8">'
+            + '<p class="alert alert-primary" id="reviewCon">' + value.content + '</p>'
+            + '</div>'
+            + '<div class="col-md-3">' + '<p class="form-control-plaintext" id="star">' + '<a href="#" value="' + value.rating + '" style="color: red;">' + ratingText + '</a>' + '</p>' + '<p>' + value.writer + '</p>' + '</div>'
+            + '<div class="col-md-1" style="display: flex; justify-content: center; flex-direction: column;">' + '<p>' + formattedDate + '</p>'
+          );
+        })
+      },
+      error: function (error) {
+        console.log("요청에러 =" + error);
+      }
+    })
+  }
+
   let ratingVal = 0;
 
   $('#star a').click(function () {
@@ -204,19 +256,50 @@
     ratingVal = $(this).attr("value");
   });
 
-  function addReview() {
-    $.post({
-      url: "/shop/productReview",
-      data: {
-        // rating: $("#star a").val(),
-        rating: ratingVal,
-        content: $("#reviewContent").val(),
-        productId: ${product.id},
-      },
-      success: function () {
+  function reviewCount() {
 
-        alert("리뷰등록");
-        // categoryList();
+    $.get({
+      url: "/shop/reviewCount",
+      data: {
+        productId: ${product.id}
+      },
+      success: function (result) {
+
+        $("#productCount").text("상품평" + "(" + result + ")");
+
+      },
+      error: function (error) {
+        console.log("요청에러 =" + error);
+      }
+
+    });
+  }
+
+  function reviewAvgScore() {
+    $.get({
+      url: "/shop/reviewAvgScore",
+      data: {
+        productId: ${product.id}
+      },
+      success: function (result) {
+
+        let star = "";
+
+        if (result >= 1 && result < 2) {
+          star = "★";
+        } else if (result >= 2 && result < 3) {
+          star = "★★";
+        } else if (result >= 3 && result < 4) {
+          star = "★★★";
+        }
+        else if(result >= 4 && result < 5) {
+          star = "★★★★";
+        }
+        else if(result == 5){
+          star = "★★★★★";
+        }
+
+        $("#reviewAvgScore").text("평점 :" + star+"("+result+")");
       },
       error: function (error) {
         console.log("요청에러 =" + error);
@@ -224,10 +307,28 @@
     });
   }
 
+  function addReview() {
+    $.post({
+      url: "/shop/productReview",
+      data: {
+        rating: ratingVal,
+        content: $("#reviewContent").val(),
+        productId: ${product.id},
+      },
+      success: function () {
 
-
-
-
+        alert("리뷰등록");
+        $("#reviewArea").text('');
+        $("#reviewContent").val('');
+        reviewList();
+        reviewCount();
+        reviewAvgScore();
+      },
+      error: function (error) {
+        console.log("요청에러 =" + error);
+      }
+    });
+  }
 
 
   ClassicEditor
@@ -291,8 +392,6 @@
     $("#InputQuantity").text(count);
     $("#InputPrice").html(count * priceVal + "원");
   });
-
-
 
 
 </script>

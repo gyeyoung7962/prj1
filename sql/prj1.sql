@@ -256,6 +256,15 @@ create table product_review(
     regDate datetime default now()
 );
 
-select pr.content, pr.rating, pr.writer
+select pr.content, pr.rating, pr.writer, p.id, pr.regDate
 from product_review pr join product p
-on pr.product_id = p.id;
+on pr.product_id = p.id
+where p.id=3
+order by pr.id desc;
+
+
+select round(avg(pr.rating), 1)
+from product_review pr join product p
+                            on pr.product_id = p.id
+where p.id=3
+order by pr.id desc;

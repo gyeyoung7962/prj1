@@ -56,4 +56,31 @@ public interface ShopMapper {
             values(#{writer}, #{content}, #{rating}, #{productId}, #{memberId})
             """)
     void addReview(ProductReview review);
+
+    @Select("""
+            select pr.content, pr.rating, pr.writer, p.id, pr.regDate
+            from product_review pr join product p
+            on pr.product_id = p.id
+            where p.id = #{productId}
+            order by pr.id desc
+            
+            """)
+    List<ProductReview> reviewList(Integer productId);
+
+    @Select("""
+            select count(pr.id)
+            from product p join product_review pr
+            on p.id = pr.product_id
+            where p.id = #{id}
+            """)
+    int reviewCount(Integer id);
+
+
+    @Select("""
+            select round(avg(pr.rating), 1)
+            from product_review pr join product p
+                                        on pr.product_id = p.id
+            where p.id = #{productId}
+            """)
+    double reviewAvgScore(Integer productId);
 }

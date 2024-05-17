@@ -61,4 +61,16 @@ public class ShopService {
 
 
     }
+
+    public List<ProductReview> reviewList(Integer productId) {
+        return mapper.reviewList(productId);
+    }
+
+    public int reviewCount(Integer id) {
+        return mapper.reviewCount(id);
+    }
+
+    public double reviewAvgScore(Integer productId) {
+        return mapper.reviewAvgScore(productId);
+    }
 }

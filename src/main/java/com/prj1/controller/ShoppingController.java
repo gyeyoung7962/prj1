@@ -33,8 +33,7 @@ public class ShoppingController {
 
         Product product = service.shopProductInfo(id); //상품 정보조회
 
-//        System.out.println("product = " + product);
-
+        int reviewCount = service.reviewCount(id); //리뷰글 개수
 
         List<ProductImg> productImg = service.shopProductImg(id);
 
@@ -48,6 +47,7 @@ public class ShoppingController {
         model.addAttribute("productImg", productImg);
         model.addAttribute("mainImage", mainImage);
         model.addAttribute("subImageList", subImageList);
+        model.addAttribute("reviewCount", reviewCount);
     }
 
     @PostMapping("/productReview")
@@ -58,6 +58,34 @@ public class ShoppingController {
         return "redirect:/shop/productInfo?id="+review.getProductId();
     }
 
+    @GetMapping("/reviewList")
+    @ResponseBody
+    public List<ProductReview> reviewList(@RequestParam("productId") Integer productId){
+
+        List<ProductReview> list = service.reviewList(productId);
+
+        list.forEach(System.out::println);
+
+        return list;
+    }
+
+    @GetMapping("/reviewCount")
+    @ResponseBody
+    public int reviewCount(@RequestParam("productId") Integer productId){
+
+        int reviewCount = service.reviewCount(productId);
+
+        return reviewCount;
+    }
+
+    @GetMapping("/reviewAvgScore")
+    @ResponseBody
+    public double reviewAvgScore(@RequestParam("productId") Integer productId){
+
+        double reviewAvgScore = service.reviewAvgScore(productId);
+
+        return reviewAvgScore;
+    }
 
 
 }
