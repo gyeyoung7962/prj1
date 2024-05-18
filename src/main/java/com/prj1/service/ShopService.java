@@ -80,7 +80,7 @@ public class ShopService {
 
         Object principal = authentication.getPrincipal();
 
-        if(principal instanceof CustomUser user){
+        if (principal instanceof CustomUser user) {
 
             Member member = user.getMember();
 

@@ -148,10 +148,19 @@
 
         <div class="cont container" id="tab2">
             <div class="row col-md-12" style="margin:0 auto;">
-                <p id="reviewAvgScore" style="color:red;">평점</p>
+                <c:if test="${reviewCount == 0}">
+                    <p style="color:red;">평점(0)</p>
+                </c:if>
+
+                <c:if test="${reviewCount != 0}">
+                    <p id="reviewAvgScore" style="color:red;">평점</p>
+                </c:if>
                 <hr/>
                 <div class="row">
                     <div class="row" id="reviewArea">
+                        <c:if test="${reviewCount == 0}">
+                            <p class="alert alert-danger" id="contentQnA">작성 리뷰는 없습니다</p>
+                        </c:if>
                     </div>
                 </div>
                 <hr/>
@@ -182,11 +191,13 @@
                 </tr>
                 </thead>
                 <tbody id="areaQnA">
-                <%--                <tr>--%>
-                <%--                    <td colspan="12" style="text-align: center;">--%>
-                <%--                        <p class="alert alert-danger" id="contentQnA">작성된 문의글이 없습니다</p>--%>
-                <%--                    </td>--%>
-                <%--                </tr>--%>
+                <c:if test="${countQnA == 0}">
+                    <tr>
+                        <td colspan="12" style="text-align: center;">
+                            <p class="alert alert-danger" id="contentQnA">작성된 문의글이 없습니다</p>
+                        </td>
+                    </tr>
+                </c:if>
                 </tbody>
             </table>
             <hr/>

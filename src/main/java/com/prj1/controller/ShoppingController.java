@@ -69,8 +69,6 @@ public class ShoppingController {
 
         List<ProductReview> list = service.reviewList(productId);
 
-        list.forEach(System.out::println);
-
         return list;
     }
 
@@ -97,8 +95,7 @@ public class ShoppingController {
 
         if (authentication == null) {
             return "redirect:/member/login";
-        }
-        else if(authentication != null){
+        } else if (authentication != null) {
             service.addQnA(productQnA, authentication);
             return "redirect:/shop/productInfo?id=" + productQnA.getProductId();
         }
@@ -110,9 +107,6 @@ public class ShoppingController {
     public List<ProductQnA> listQnA(@RequestParam("productId") Integer productId) {
 
         List<ProductQnA> list = service.listQnA(productId);
-
-        list.forEach(System.out::println);
-
         return list;
     }
 
@@ -124,8 +118,6 @@ public class ShoppingController {
 
         return countQnA;
     }
-
-
 
 
 }
