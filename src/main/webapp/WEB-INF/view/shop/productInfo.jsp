@@ -36,7 +36,6 @@
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
-<%--<div class="container" style="position: absolute; top:40%; left:50%; transform:translate(-50%, -50%);">--%>
 <div class="container mt-5">
     <div class="row col-md-10" style="margin: 0 auto;">
 
@@ -54,10 +53,8 @@
                     </div>
                     <div style="display:flex; width:100px; height:100px">
                     </div>
-
                 </div>
             </div>
-
 
             <div class="col-md-6"
                  style="text-align: center; display: flex; align-items: center; justify-content: center; flex-direction: column;">
@@ -102,9 +99,7 @@
                         <p class="form-control-plaintext" id="InputPrice">${product.price}</p>
                     </div>
                 </div>
-
                 <hr/>
-
                 <div class="row mt-2" style="display: flex;">
                     <div class="col-md-12">
                         <button class="btn btn-primary">장바구니</button>
@@ -115,7 +110,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="row mt-5 col-md-10" style="text-align: center; margin: 0 auto;" id="product_tab">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -139,39 +133,32 @@
                 </li>
             </div>
             <div class="col-md-4">
-
                 <li class="nav-item" role="presentation">
-                    <a href="#tab2" class="nav-link tabBtn" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    <a href="#tab3" class="nav-link tabBtn" data-bs-toggle="pill" data-bs-target="#pills-profile"
                        type="button"
-                       role="tab" aria-controls="pills-profile" aria-selected="false">상품문의
+                       role="tab" aria-controls="pills-profile" aria-selected="false" id="countQnA">상품문의(${countQnA})
                     </a>
                 </li>
             </div>
         </ul>
         <hr/>
-
-
         <div class="row cont" id="tab1">
             <textarea class="form-control-plaintext" id="editor">${product.content}</textarea>
         </div>
 
-
         <div class="cont container" id="tab2">
-
-
             <div class="row col-md-12" style="margin:0 auto;">
                 <p id="reviewAvgScore" style="color:red;">평점</p>
                 <hr/>
                 <div class="row">
                     <div class="row" id="reviewArea">
-
                     </div>
                 </div>
+                <hr/>
                 <div class="col-md-8" style="vertical-align: center;">
                         <textarea class="star_box form-control" placeholder="리뷰 내용을 작성해주세요."
                                   id="reviewContent" style="resize: none;"></textarea>
                 </div>
-
                 <div class="col-md-4">
                     <p class="form-control-plaintext" id="star"> <!-- 부모 -->
                         <a href="#" value="1">★</a> <!-- 자식들-->
@@ -186,17 +173,48 @@
         </div>
 
         <div class="cont" id="tab3">
-
-            상품 문의
-
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width:50%">제목</th>
+                    <th style="width:20%">작성자</th>
+                    <th style="width:20%">작성일</th>
+                </tr>
+                </thead>
+                <tbody id="areaQnA">
+                <%--                <tr>--%>
+                <%--                    <td colspan="12" style="text-align: center;">--%>
+                <%--                        <p class="alert alert-danger" id="contentQnA">작성된 문의글이 없습니다</p>--%>
+                <%--                    </td>--%>
+                <%--                </tr>--%>
+                </tbody>
+            </table>
+            <hr/>
+            <div class="row col-md-12" style="margin: 0 auto;">
+                <div class="col-md-9" style="vertical-align: center;">
+                    <input type="text" class="form-control" placeholder="제목.." id="titleQnA">
+                    <textarea class="star_box form-control" placeholder="문의내용 작성해주세요"
+                              id="textQnA" style="resize: none;"></textarea>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <p style="text-align: left; margin:0;">비밀글</p>
+                        </div>
+                        <p style="text-align: left;">
+                            <input type="submit" class="btn btn-primary" onclick="addQnA()" value="작성"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
     </div>
 </div>
 
 <script>
 
+  listQnA();
   reviewList();
   reviewAvgScore();
 
@@ -209,9 +227,7 @@
         productId: ${product.id}
       },
       success: function (result) {
-
         let ratingText = "";
-
 
         $(result).each((key, value) => {
 
@@ -226,18 +242,16 @@
           } else if (value.rating == 5) {
             ratingText = "★★★★★";
           }
-
           let rawDate = new Date(value.regDate);
-
           let formattedDate = String(rawDate.getFullYear()).slice(-2) + '/' +
             String(rawDate.getMonth() + 1).padStart(2, '0') + '/' +
             String(rawDate.getDate()).padStart(2, '0');
 
           $("#reviewArea").append(
-            '<div class="col-md-8">'
+            '<div class="col-md-9">'
             + '<p class="alert alert-primary" id="reviewCon">' + value.content + '</p>'
             + '</div>'
-            + '<div class="col-md-3">' + '<p class="form-control-plaintext" id="star">' + '<a href="#" value="' + value.rating + '" style="color: red;">' + ratingText + '</a>' + '</p>' + '<p>' + value.writer + '</p>' + '</div>'
+            + '<div class="col-md-2">' + '<p class="form-control-plaintext" id="star">' + '<a href="#" value="' + value.rating + '" style="color: red;">' + ratingText + '</a>' + '</p>' + '<p>' + value.writer + "님" + '</p>' + '</div>'
             + '<div class="col-md-1" style="display: flex; justify-content: center; flex-direction: column;">' + '<p>' + formattedDate + '</p>'
           );
         })
@@ -264,14 +278,11 @@
         productId: ${product.id}
       },
       success: function (result) {
-
         $("#productCount").text("상품평" + "(" + result + ")");
-
       },
       error: function (error) {
         console.log("요청에러 =" + error);
       }
-
     });
   }
 
@@ -282,7 +293,6 @@
         productId: ${product.id}
       },
       success: function (result) {
-
         let star = "";
 
         if (result >= 1 && result < 2) {
@@ -291,15 +301,12 @@
           star = "★★";
         } else if (result >= 3 && result < 4) {
           star = "★★★";
-        }
-        else if(result >= 4 && result < 5) {
+        } else if (result >= 4 && result < 5) {
           star = "★★★★";
-        }
-        else if(result == 5){
+        } else if (result == 5) {
           star = "★★★★★";
         }
-
-        $("#reviewAvgScore").text("평점 :" + star+"("+result+")");
+        $("#reviewAvgScore").text("평점 :" + star + "(" + result + ")");
       },
       error: function (error) {
         console.log("요청에러 =" + error);
@@ -316,13 +323,82 @@
         productId: ${product.id},
       },
       success: function () {
-
-        alert("리뷰등록");
         $("#reviewArea").text('');
         $("#reviewContent").val('');
         reviewList();
         reviewCount();
         reviewAvgScore();
+      },
+      error: function (error) {
+        console.log("요청에러 =" + error);
+      }
+    });
+  }
+
+  function listQnA() {
+
+    $.get({
+      url: "/shop/listQnA",
+      data: {
+        productId: ${product.id}
+      },
+      success: function (result) {
+
+        $(result).each((key, value) => {
+
+          let rawDate = new Date(value.regDate);
+          let formattedDate = String(rawDate.getFullYear()).slice(-2) + '/' +
+            String(rawDate.getMonth() + 1).padStart(2, '0') + '/' +
+            String(rawDate.getDate()).padStart(2, '0');
+
+
+          console.log(value.title + " " + value.writer + " " + value.regDate);
+          $("#areaQnA").append(
+            '<tr>' +
+            '<td>' + value.title + '</td>' +
+            '<td>' + value.writer + '</td>' +
+            '<td>' + formattedDate + '</td>' +
+            +'</tr>'
+          );
+        });
+      },
+      error: function (error) {
+        console.log("에러" + error);
+      }
+    });
+  }
+
+  function addQnA() {
+
+    $.post({
+      url: "/shop/addQnA",
+      data: {
+        title: $("#titleQnA").val(),
+        content: $("#textQnA").val(),
+        productId: ${product.id}
+      },
+      success: function () {
+        $("#areaQnA").empty();
+        $("#titleQnA").val('');
+        $("#textQnA").val('');
+        countQnA();
+        listQnA();
+      },
+      error: function (err) {
+        console.log("요청에러:" + err);
+      }
+    });
+  }
+
+  function countQnA() {
+
+    $.get({
+      url: "/shop/countQnA",
+      data: {
+        productId: ${product.id}
+      },
+      success: function (result) {
+        $("#countQnA").text("상품평" + "(" + result + ")");
       },
       error: function (error) {
         console.log("요청에러 =" + error);
@@ -343,15 +419,12 @@
       console.error(error);
     });
 
-
   $("#product_tab #pills-tab > div").on('click', function (e) {
 
     const index = $(this).index();
-
     console.log('index=' + index);
 
     if (index == 0) {
-
       $("#tab2").hide();
       $("#tab3").hide();
       $("#tab1").show();
@@ -365,17 +438,13 @@
       $("#tab1").hide();
       $("#tab2").hide();
       $("#tab3").show();
-
     }
   });
-
 
   const priceVal = parseInt($("#InputPrice").text());
 
   $("#minus").on('click', function () {
-
     const quantityVal = $("#InputQuantity").text();
-
     if (quantityVal == 1) {
       alert("최소수량입니다");
       return;
@@ -383,7 +452,7 @@
 
     const count = parseInt(quantityVal) - 1
     $("#InputQuantity").text(count);
-    $("#InputPrice").html(parseInt($("#InputPrice").text()) - priceVal);
+    $("#InputPrice").html(parseInt($("#InputPrice").text()) - priceVal + "원");
   })
   $("#plus").on('click', function () {
 
@@ -392,8 +461,6 @@
     $("#InputQuantity").text(count);
     $("#InputPrice").html(count * priceVal + "원");
   });
-
-
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"

@@ -81,48 +81,53 @@ create table authority
 );
 
 insert into authority
-(member_id, name) values (8, 'admin');
+    (member_id, name)
+values (8, 'admin');
 
 select *
 from authority;
 
 
 select *
-from member m left join authority a
-on m.id = a.member_id;
+from member m
+         left join authority a
+                   on m.id = a.member_id;
 
-create table product(
-    id int auto_increment primary key comment '빈번호',
-    name varchar(50) not null unique comment '상품이름',
-    price int not null comment '상품가격',
-    quantity int default 0 comment '수량',
-    stock int default 0 comment '재고수량',
-    content varchar(2000) comment '상품설명',
-    regDate datetime default now() comment '등록일',
-    subCategory_id int references subCategory(subCategory_id)
+create table product
+(
+    id             int auto_increment primary key comment '빈번호',
+    name           varchar(50) not null unique comment '상품이름',
+    price          int         not null comment '상품가격',
+    quantity       int      default 0 comment '수량',
+    stock          int      default 0 comment '재고수량',
+    content        varchar(2000) comment '상품설명',
+    regDate        datetime default now() comment '등록일',
+    subCategory_id int references subCategory (subCategory_id)
 );
 
-create table category(
+create table category
+(
 
-    category_id int primary key auto_increment,
+    category_id   int primary key auto_increment,
     category_name varchar(20) not null
 );
 
-create table subCategory(
-    subCategory_id int primary key auto_increment,
-    parent_category_id int references category(category_id),
-    subCategory_name varchar(20) not null
+create table subCategory
+(
+    subCategory_id     int primary key auto_increment,
+    parent_category_id int references category (category_id),
+    subCategory_name   varchar(20) not null
 );
 
-insert into category( category_name)
-values('아우터'),
-      ('상의'),
-      ('하의'),
-      ('신발'),
-      ('Acc');
+insert into category(category_name)
+values ('아우터'),
+       ('상의'),
+       ('하의'),
+       ('신발'),
+       ('Acc');
 
 insert into subCategory(parent_category_id, subcategory_name)
-values (1,'자켓'),
+values (1, '자켓'),
        (1, '패딩'),
        (2, '스웨터'),
        (2, '맨투맨'),
@@ -143,9 +148,10 @@ select *
 from category;
 
 select c.category_id, c.category_name, s.subCategory_name
-from category c join subCategory s
-on c.category_id = s.parent_category_id
-where c.category_id =1;
+from category c
+         join subCategory s
+              on c.category_id = s.parent_category_id
+where c.category_id = 1;
 
 select *
 from subCategory
@@ -154,10 +160,11 @@ order by parent_category_id, subCategory_id;
 
 
 select p.name, p.price, p.stock, c.category_name, s.subCategory_name
-from product p join subCategory s
-on p.subCategory_id = s.subCategory_id
-join category c
-on c.category_id = s.parent_category_id
+from product p
+         join subCategory s
+              on p.subCategory_id = s.subCategory_id
+         join category c
+              on c.category_id = s.parent_category_id
 where c.category_id = 2
 order by c.category_id, s.subCategory_id;
 
@@ -182,63 +189,69 @@ select *
 from product_img;
 
 select *
-from product p join product_img i
-on p.id = i.product_id
+from product p
+         join product_img i
+              on p.id = i.product_id
 where p.id = 2;
 
 select p.name, i.name, i.path as uploadpath, i.is_title_img as "대표사진여부(1대표 2일반)"
-from product p join product_img i
-                    on p.id = i.product_id
+from product p
+         join product_img i
+              on p.id = i.product_id
 where p.id = 2;
 
-select p.name , pi.path as image
-from product p join product_img pi
-on p.id = pi.product_id and pi.is_title_img = 1;
-
+select p.name, pi.path as image
+from product p
+         join product_img pi
+              on p.id = pi.product_id and pi.is_title_img = 1;
 
 
 # 대표사진 아닌 일반이미지
 select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
-from product p join product_img pi
-                    on p.id = pi.product_id
-where p.id = 2 and pi.is_title_img =0;
+from product p
+         join product_img pi
+              on p.id = pi.product_id
+where p.id = 2
+  and pi.is_title_img = 0;
 
 # 대표사진 조회
 select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
-from product p join product_img pi
-on p.id = pi.product_id
-where p.id =2;
+from product p
+         join product_img pi
+              on p.id = pi.product_id
+where p.id = 2;
 
 select pi.path
-from product p join product_img pi
-on p.id = pi.product_id
+from product p
+         join product_img pi
+              on p.id = pi.product_id
 where p.id = 2;
 
 select *
 from product_img
 where product_id = 2;
 
-select p.id, p.name , pi.path as image
-from product p join product_img pi
-                    on p.id = pi.product_id and pi.is_title_img = 1
+select p.id, p.name, pi.path as image
+from product p
+         join product_img pi
+              on p.id = pi.product_id and pi.is_title_img = 1
 order by p.id desc;
 
 
 
-
-
-select * from product;
-select * from product_img;
-
-
+select *
+from product;
+select *
+from product_img;
 
 
 
-create table product_img(
-    id int primary key auto_increment,
-    name varchar(100),
-    path varchar(2000),
-    product_id int references product(id),
+create table product_img
+(
+    id           int primary key auto_increment,
+    name         varchar(100),
+    path         varchar(2000),
+    product_id   int references product (id),
     is_title_img boolean default false
 );
 
@@ -246,25 +259,53 @@ show tables;
 select *
 from product;
 
-create table product_review(
-    id int primary key auto_increment,
-    writer varchar(50),
-    content varchar(2000) not null,
-    rating int not null,
+create table product_review
+(
+    id         int primary key auto_increment,
+    writer     varchar(50),
+    content    varchar(2000) not null,
+    rating     int           not null,
     product_id int references product (id),
-    member_id int references member(id),
-    regDate datetime default now()
+    member_id  int references member (id),
+    regDate    datetime default now()
 );
 
 select pr.content, pr.rating, pr.writer, p.id, pr.regDate
-from product_review pr join product p
-on pr.product_id = p.id
-where p.id=3
+from product_review pr
+         join product p
+              on pr.product_id = p.id
+where p.id = 3
 order by pr.id desc;
 
 
 select round(avg(pr.rating), 1)
-from product_review pr join product p
-                            on pr.product_id = p.id
-where p.id=3
+from product_review pr
+         join product p
+              on pr.product_id = p.id
+where p.id = 3
 order by pr.id desc;
+
+
+create table product_qna
+(
+    id int auto_increment primary key,
+    title varchar(100),
+    content varchar(2000),
+    writer varchar(100),
+    regDate datetime default now(),
+    product_id int references product(id)
+);
+
+desc product_qna;
+
+select count(p.id)
+from product_qna pq join product p
+on pq.product_id = p.id
+where p.id =2;
+
+select pq.id, pq.writer, pq.title, pq.regDate
+from product p join product_qna pq
+on p.id = pq.product_id
+where p.id = 4
+order by pq.id;
+

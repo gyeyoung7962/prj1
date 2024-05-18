@@ -1,8 +1,6 @@
 package com.prj1.controller;
 
-import com.prj1.domain.Product;
-import com.prj1.domain.ProductImg;
-import com.prj1.domain.ProductReview;
+import com.prj1.domain.*;
 import com.prj1.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -34,6 +32,7 @@ public class ShoppingController {
         Product product = service.shopProductInfo(id); //상품 정보조회
 
         int reviewCount = service.reviewCount(id); //리뷰글 개수
+        int countQnA = service.countQnA(id); //질문글 개수
 
         List<ProductImg> productImg = service.shopProductImg(id);
 
@@ -48,19 +47,25 @@ public class ShoppingController {
         model.addAttribute("mainImage", mainImage);
         model.addAttribute("subImageList", subImageList);
         model.addAttribute("reviewCount", reviewCount);
+        model.addAttribute("countQnA", countQnA);
     }
 
     @PostMapping("/productReview")
-    public String addReview(ProductReview review, Authentication authentication){
+    public String addReview(ProductReview review, Authentication authentication) {
 
-        service.addReview(review, authentication);
+        if (authentication == null) {
+            return "redirect:/member/login";
+        } else if (authentication != null) {
+            service.addReview(review, authentication);
+            return "redirect:/shop/productInfo?id=" + review.getProductId();
+        }
 
-        return "redirect:/shop/productInfo?id="+review.getProductId();
+        return null;
     }
 
     @GetMapping("/reviewList")
     @ResponseBody
-    public List<ProductReview> reviewList(@RequestParam("productId") Integer productId){
+    public List<ProductReview> reviewList(@RequestParam("productId") Integer productId) {
 
         List<ProductReview> list = service.reviewList(productId);
 
@@ -71,7 +76,7 @@ public class ShoppingController {
 
     @GetMapping("/reviewCount")
     @ResponseBody
-    public int reviewCount(@RequestParam("productId") Integer productId){
+    public int reviewCount(@RequestParam("productId") Integer productId) {
 
         int reviewCount = service.reviewCount(productId);
 
@@ -80,12 +85,47 @@ public class ShoppingController {
 
     @GetMapping("/reviewAvgScore")
     @ResponseBody
-    public double reviewAvgScore(@RequestParam("productId") Integer productId){
+    public Double reviewAvgScore(@RequestParam("productId") Integer productId) {
 
-        double reviewAvgScore = service.reviewAvgScore(productId);
+        Double reviewAvgScore = service.reviewAvgScore(productId);
 
         return reviewAvgScore;
     }
+
+    @PostMapping("/addQnA")
+    public String addQuestion(ProductQnA productQnA, Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/member/login";
+        }
+        else if(authentication != null){
+            service.addQnA(productQnA, authentication);
+            return "redirect:/shop/productInfo?id=" + productQnA.getProductId();
+        }
+        return null;
+    }
+
+    @GetMapping("/listQnA")
+    @ResponseBody
+    public List<ProductQnA> listQnA(@RequestParam("productId") Integer productId) {
+
+        List<ProductQnA> list = service.listQnA(productId);
+
+        list.forEach(System.out::println);
+
+        return list;
+    }
+
+    @GetMapping("/countQnA")
+    @ResponseBody
+    public int countQnA(@RequestParam("productId") Integer productId) {
+
+        int countQnA = service.countQnA(productId);
+
+        return countQnA;
+    }
+
+
 
 
 }

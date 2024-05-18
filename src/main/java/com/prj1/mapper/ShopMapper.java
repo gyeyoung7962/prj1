@@ -3,6 +3,7 @@ package com.prj1.mapper;
 
 import com.prj1.domain.Product;
 import com.prj1.domain.ProductImg;
+import com.prj1.domain.ProductQnA;
 import com.prj1.domain.ProductReview;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,9 +15,8 @@ import java.util.List;
 public interface ShopMapper {
 
 
-
     @Select("""
-            select p.id, p.name , pi.path as image
+            select p.id, p.name , pi.path as image, p.price
             from product p join product_img pi
             on p.id = pi.product_id and pi.is_title_img = 1
             order by p.id desc;
@@ -63,7 +63,7 @@ public interface ShopMapper {
             on pr.product_id = p.id
             where p.id = #{productId}
             order by pr.id desc
-            
+                        
             """)
     List<ProductReview> reviewList(Integer productId);
 
@@ -82,5 +82,28 @@ public interface ShopMapper {
                                         on pr.product_id = p.id
             where p.id = #{productId}
             """)
-    double reviewAvgScore(Integer productId);
+    Double reviewAvgScore(Integer productId);
+
+    @Insert("""
+            insert into product_qna(title, content, writer, product_id)
+            values(#{title},#{content},#{writer},#{productId})
+            """)
+    void addQnA(ProductQnA productQnA);
+
+    @Select("""
+            select pq.id, pq.writer, pq.title, pq.regDate, pq.content
+            from product_qna pq join product p
+            on pq.product_id = p.id
+            where p.id = #{productId}
+            order by pq.id desc;
+            """)
+    List<ProductQnA> listQnA(Integer productId);
+
+    @Select("""
+            select count(p.id)
+            from product_qna pq join product p
+            on pq.product_id = p.id
+            where p.id = #{productId}
+            """)
+    int countQnA(Integer productId);
 }

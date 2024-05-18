@@ -45,7 +45,7 @@ public class ShopService {
 
     public void addReview(ProductReview review, Authentication authentication) {
 
-        if(authentication == null){
+        if (authentication == null) {
             return;
         }
 
@@ -58,8 +58,6 @@ public class ShopService {
             review.setWriter(member.getNickName());
             mapper.addReview(review);
         }
-
-
     }
 
     public List<ProductReview> reviewList(Integer productId) {
@@ -70,7 +68,34 @@ public class ShopService {
         return mapper.reviewCount(id);
     }
 
-    public double reviewAvgScore(Integer productId) {
+    public Double reviewAvgScore(Integer productId) {
         return mapper.reviewAvgScore(productId);
+    }
+
+    public void addQnA(ProductQnA productQnA, Authentication authentication) {
+
+        if (authentication == null) {
+            return;
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if(principal instanceof CustomUser user){
+
+            Member member = user.getMember();
+
+            productQnA.setWriter(member.getNickName());
+            mapper.addQnA(productQnA);
+        }
+
+    }
+
+    public List<ProductQnA> listQnA(Integer productId) {
+        return mapper.listQnA(productId);
+    }
+
+    public int countQnA(Integer productId) {
+
+        return mapper.countQnA(productId);
     }
 }
