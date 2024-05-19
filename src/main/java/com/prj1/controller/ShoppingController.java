@@ -36,6 +36,10 @@ public class ShoppingController {
 
         List<ProductImg> productImg = service.shopProductImg(id);
 
+        List<ProductQnA> list = service.listQnA(id);
+
+
+
         //메인이미지 조회
         String mainImage = service.selectMainImage(id);
 
@@ -48,6 +52,7 @@ public class ShoppingController {
         model.addAttribute("subImageList", subImageList);
         model.addAttribute("reviewCount", reviewCount);
         model.addAttribute("countQnA", countQnA);
+        model.addAttribute("writerList", list);
     }
 
     @PostMapping("/productReview")

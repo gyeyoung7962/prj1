@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -223,7 +224,41 @@
     </div>
 </div>
 
+<div id="contentDisplayArea">
+</div>
+
+<sec:authentication property="principal.member" var="writerQnA"/>
+<!-- Modal -->
+<%--
+<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contentModalLabel">상세내용</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 모달 내용이 여기에 들어갑니다. -->
+            </div>
+            <div class="modal-footer" id="modalAddQnA">
+
+                <sec:authorize access="isAuthenticated()">
+                    <sec:authentication property="principal.member" var="writerQnA"/>
+                    <c:if test="${writerQnA.nickName == writerList}">
+
+
+                    </c:if>
+                </sec:authorize>
+                <hr/>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+--%>
+
 <script>
+
 
   listQnA();
   reviewList();
@@ -346,6 +381,10 @@
     });
   }
 
+  let writerName = "${writerQnA.nickName}";
+
+  console.log("로그인 사용자 닉네임:" + writerName);
+
   function listQnA() {
 
     $.get({
@@ -357,16 +396,15 @@
 
         $(result).each((key, value) => {
 
+
           let rawDate = new Date(value.regDate);
           let formattedDate = String(rawDate.getFullYear()).slice(-2) + '/' +
             String(rawDate.getMonth() + 1).padStart(2, '0') + '/' +
             String(rawDate.getDate()).padStart(2, '0');
 
-
-          console.log(value.title + " " + value.writer + " " + value.regDate);
           $("#areaQnA").append(
             '<tr>' +
-            '<td>' + value.title + '</td>' +
+            '<td>' + '<p class="view-content" data-id="' + value.id + '" data-content="' + value.content + '" + data-writer = "' + value.writer + '">' + value.title + '</p>' + '</td>' +
             '<td>' + value.writer + '</td>' +
             '<td>' + formattedDate + '</td>' +
             +'</tr>'
@@ -378,6 +416,56 @@
       }
     });
   }
+
+  $(document).on('click', '.view-content', function () {
+    let id = $(this).data('id');
+    let content = $(this).data('content');
+    let writer = $(this).data('writer');
+
+    console.log(id);
+
+    let $contentRow;
+
+    if ((writerName === writer) || (writerName === "admin")) {
+
+      $contentRow = $(
+        '<tr class="content-row">' +
+        '<td colspan="3">' +
+        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '<span class="badge text-bg-light" id="answerQnA" data-id="' + id + '">' + "답변" + "</span>" + '</p>' +
+        '</td>' +
+        '</tr>'
+      );
+    } else {
+      console.log('작성자가 다릅니다');
+      $contentRow = $(
+        '<tr class="content-row">' +
+        '<td colspan="3">' +
+        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '</p>' +
+        '</td>' +
+        '</tr>'
+      );
+
+    }
+
+
+    $(".content-row").remove();
+    $(this).closest('tr').after($contentRow);
+  });
+
+  $(document).on('click', '#answerQnA', function () {
+
+    let id = $(this).data('id');
+
+    /*
+    $.post({
+      url : "/shop/addQnAComment"
+
+    });
+     */
+
+
+  });
+
 
   function addQnA() {
 

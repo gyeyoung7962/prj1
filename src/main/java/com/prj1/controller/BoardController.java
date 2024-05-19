@@ -79,7 +79,7 @@ public class BoardController {
         }
 
 
-        return "redirect:/board/list";
+        return "redirect        :/board/list";
     }
 
     @GetMapping("/update")
