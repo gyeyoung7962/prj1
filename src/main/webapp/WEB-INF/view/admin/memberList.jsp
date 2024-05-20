@@ -44,7 +44,7 @@
                 <td>
                     <sec:authorize access="isAuthenticated()|| hasAuthority('admin')">
                         <sec:authentication property="principal.member" var="member"/>
-                        <c:if test="${member.id eq list.id}">
+<%--                        <c:if test="${member.id eq list.id}">--%>
 
                             <div class="row">
                             <div class="col-md-6">
@@ -61,7 +61,7 @@
                             </form>
                         </div>
                         </div>
-                    </c:if>
+<%--                    </c:if>--%>
                     </sec:authorize>
 
                 </td>

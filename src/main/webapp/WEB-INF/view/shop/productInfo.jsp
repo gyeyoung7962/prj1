@@ -424,6 +424,7 @@
       );
     }
 
+
     $.get({
 
       url: "/shop/commentList",
@@ -436,6 +437,36 @@
 
         $(result).each((key, value) => {
 
+
+
+          if(value.writer === "admin"){
+
+
+            $contentRow.append(
+              '<div style="width: 100%;">' +
+              '<tr class="answer-row">' +
+              '<td colspan="3">' +
+              '<p>' + '<span class="badge text-bg-danger" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
+              '</td>' +
+              '</tr>' +
+              '</div>'
+            )
+          }
+          else{
+            $contentRow.append(
+              '<div style="width: 100%;">' +
+              '<tr class="answer-row">' +
+              '<td colspan="3">' +
+              '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
+              '</td>' +
+              '</tr>' +
+              '</div>'
+            )
+          }
+
+
+
+          /*
           $contentRow.append(
             '<div style="width: 100%;">' +
             '<tr class="answer-row">' +
@@ -445,6 +476,8 @@
             '</tr>' +
             '</div>'
           )
+           */
+
         });
 
       },

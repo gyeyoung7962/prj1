@@ -327,3 +327,6 @@ from comment_qna cq join product_qna pq
 on cq.product_qna_id = pq.id
 where pq.id = 9;
 
+select *
+from member;
+
