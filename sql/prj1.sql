@@ -2,7 +2,7 @@ create database prj1;
 
 use prj1;
 
-drop table board;
+show tables;
 
 create table board
 (
@@ -13,12 +13,6 @@ create table board
     regDate datetime      not null default now()
 );
 
-desc board;
-
-select *
-from board;
-
-drop table member;
 create table member
 (
     id        int primary key auto_increment,
@@ -31,47 +25,12 @@ create table member
 alter table member
     add column regDate datetime default now();
 
-select *
-from member;
-
-
-select count(*)
-from member
-where email = 'test1@naver.com';
-
-insert into board(title, content, writer) (select title, content, writer from board);
-
-insert into board(title, content, writer)
-values ('첫글입니다', 'ㅇㅇㅇㅇ', '테스트');
-
-
-select *
-from board;
-
-alter table board
-    auto_increment = 1;
-
 #board 테이블 수정
 #writer 컬럼 지우기
 #member_id int references member(id) 컬럼추가
 
 alter table board
-    drop column writer;
-
-alter table board
     add column member_id int references member (id);
-
-update board
-set member_id = 2
-where id > 0;
-
-select *
-from member;
-
-
-desc board;
-desc member;
-desc authority;
 
 create table authority
 (
@@ -87,12 +46,6 @@ values (8, 'admin');
 select *
 from authority;
 
-
-select *
-from member m
-         left join authority a
-                   on m.id = a.member_id;
-
 create table product
 (
     id             int auto_increment primary key comment '빈번호',
@@ -107,7 +60,6 @@ create table product
 
 create table category
 (
-
     category_id   int primary key auto_increment,
     category_name varchar(20) not null
 );
@@ -138,113 +90,21 @@ values (1, '자켓'),
        (4, '런닝화'),
        (4, '운동화');
 
-select *
-from category;
-
-select *
-from subCategory;
-
-select *
-from category;
-
-select c.category_id, c.category_name, s.subCategory_name
-from category c
-         join subCategory s
-              on c.category_id = s.parent_category_id
-where c.category_id = 1;
-
-select *
-from subCategory
-order by parent_category_id, subCategory_id;
-
-
-
-select p.name, p.price, p.stock, c.category_name, s.subCategory_name
-from product p
-         join subCategory s
-              on p.subCategory_id = s.subCategory_id
-         join category c
-              on c.category_id = s.parent_category_id
-where c.category_id = 2
-order by c.category_id, s.subCategory_id;
-
-select *
-from subCategory
-where parent_category_id = 1;
-
-
-
 drop table product;
 drop table product_img;
 drop table category;
 drop table subCategory;
-
-
-desc product;
-desc product_img;
-
-select *
-from product;
-select *
-from product_img;
+drop table comment_qna;
+drop table product_review;
+drop table product_qna;
 
 select *
-from product p
-         join product_img i
-              on p.id = i.product_id
-where p.id = 2;
-
-select p.name, i.name, i.path as uploadpath, i.is_title_img as "대표사진여부(1대표 2일반)"
-from product p
-         join product_img i
-              on p.id = i.product_id
-where p.id = 2;
-
-select p.name, pi.path as image
-from product p
-         join product_img pi
-              on p.id = pi.product_id and pi.is_title_img = 1;
-
-
-# 대표사진 아닌 일반이미지
-select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
-from product p
-         join product_img pi
-              on p.id = pi.product_id
-where p.id = 2
-  and pi.is_title_img = 0;
-
-# 대표사진 조회
-select p.id, p.name, p.price, p.stock, p.content, pi.path, pi.is_title_img
-from product p
-         join product_img pi
-              on p.id = pi.product_id
-where p.id = 2;
-
-select pi.path
-from product p
-         join product_img pi
-              on p.id = pi.product_id
-where p.id = 2;
+from product_qna;
 
 select *
-from product_img
-where product_id = 2;
+from comment_qna;
 
-select p.id, p.name, pi.path as image
-from product p
-         join product_img pi
-              on p.id = pi.product_id and pi.is_title_img = 1
-order by p.id desc;
-
-
-
-select *
-from product;
-select *
-from product_img;
-
-
+show tables;
 
 create table product_img
 (
@@ -254,10 +114,6 @@ create table product_img
     product_id   int references product (id),
     is_title_img boolean default false
 );
-
-show tables;
-select *
-from product;
 
 create table product_review
 (
@@ -270,22 +126,6 @@ create table product_review
     regDate    datetime default now()
 );
 
-select pr.content, pr.rating, pr.writer, p.id, pr.regDate
-from product_review pr
-         join product p
-              on pr.product_id = p.id
-where p.id = 3
-order by pr.id desc;
-
-
-select round(avg(pr.rating), 1)
-from product_review pr
-         join product p
-              on pr.product_id = p.id
-where p.id = 3
-order by pr.id desc;
-
-
 create table product_qna
 (
     id int auto_increment primary key,
@@ -296,19 +136,6 @@ create table product_qna
     product_id int references product(id)
 );
 
-desc product_qna;
-
-select count(p.id)
-from product_qna pq join product p
-on pq.product_id = p.id
-where p.id =2;
-
-select pq.id, pq.writer, pq.title, pq.regDate
-from product p join product_qna pq
-on p.id = pq.product_id
-where p.id = 4
-order by pq.id;
-
 create table comment_qna(
     id int auto_increment primary key,
     product_qna_id int references product_qna(id),
@@ -317,16 +144,4 @@ create table comment_qna(
     regDate datetime default now()
 );
 
-select *
-from comment_qna;
-drop table comment_qna;
-
-
-select cq.writer, cq.content, cq.regDate
-from comment_qna cq join product_qna pq
-on cq.product_qna_id = pq.id
-where pq.id = 9;
-
-select *
-from member;
 

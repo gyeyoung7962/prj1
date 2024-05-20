@@ -10,43 +10,59 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <style>
+    .panel-body {
+        position: relative;
+        display: inline-block;
+    }
+
+    .panel-body:hover .overlay {
+        height: 100%;
+        display: block;
+        animation-delay: 3s;
+    }
+
+    #imgList {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .overlay {
+        position: absolute;
+        display: none;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(81, 167, 136, 0.13);
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        transition: .5s ease;
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        padding: 20px;
+    }
 </style>
 <body>
 
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
-<%--
-<div style="display: flex; justify-content: center; height:100%;">
-    <div class="container" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);">
-
-        <div class="row" style="justify-content: center;">
-            <c:forEach items="${list}" var="list">
-                <div class="text-center justify-content-center"
-                     style="display: flex; width: 264px;">
-                    <div class="">
-                        <img src="/upload/${list.image}" class="rounded img-thumbnail"
-                             style="width: 200px; height:200px;"
-                             alt="...">
-                        <p><a href="/shop/productInfo?id=${list.id}">${list.name}</a></p>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-</div>
---%>
-<div class="container">
-    <div class="row p-5">
+<div class="container-fluid">
+    <div class="row p-5 m-5">
         <c:forEach items="${list}" var="list">
-            <div class="col-sm-12 col-md-6 col-lg-4 p-5">
+            <div class="col-sm-12 col-md-6 col-lg-3 p-2">
                 <div class="panel panel-primary" style="text-align: center;">
 
                     <a style="text-decoration: none;" href="/shop/productInfo?id=${list.id}">
-                    <div class="panel-body">
-                        <img src="/upload/${list.image}" class="img-responsive" style="width:100%; height: 100%; max-width: 400px; max-height: 600px; border-radius: 10%;"
-                             alt="Image">
-                    </div>
-                    <div>${list.name}</div>
+                        <div class="panel-body">
+                            <img src="/upload/${list.image}" class="img-responsive rounded img-thumbnail" id="imgList"
+                                 style="width:100%; height: 100%; max-width: 300px; max-height: 400px; border-radius: 10%;"
+                                 alt="Image">
+                            <div class="overlay">${list.name}</div>
+                        </div>
+
+                        <div class="">${list.name}</div>
                     </a>
                     <div>${list.price}원</div>
 

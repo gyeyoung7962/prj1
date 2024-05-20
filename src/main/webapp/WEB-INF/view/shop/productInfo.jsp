@@ -38,12 +38,12 @@
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
 <div class="container mt-5 col-lg-12">
-    <div class="row col-md-12 col-lg-10" style="margin: 0 auto;">
+    <div class="row col-md-12 col-lg-12" style="margin: 0 auto;">
 
         <div class="row">
             <div class="col-md-12 col-lg-6" style="display: flex; justify-content: center; margin: 0 auto;">
                 <div style="width:100%; height:100%; max-width: 100%; max-height: 500px; margin: 0 auto;">
-                    <img src="/upload/${mainImage}" style="width:100%; height:100%; text-align: center;">
+                    <img src="/upload/${mainImage}" class="img-responsive rounded img-thumbnail" style="width:100%; height:100%; text-align: center;">
                 </div>
 
                 <div style="display: block; width: 1px;">
@@ -236,8 +236,8 @@
 
 
   listQnA();
-  reviewList();
   reviewAvgScore();
+  reviewList();
 
 
   function reviewList() {
@@ -409,7 +409,7 @@
       $contentRow = $(
         '<tr class="content-row" style="display: block;">' +
         '<td colspan="3">' +
-        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '<span class="badge text-bg-light" id="answerQnA" data-id="' + id + '" style="cursor:pointer;">' + "답변" + "</span>" + '</p>' +
+        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + '<h3>' + content + '</h3>' + '<span class="badge text-bg-light" id="answerQnA" data-id="' + id + '" style="cursor:pointer;">' + "답변" + "</span>" + '</p>' +
         '</td>' +
         '</tr>'
       );
@@ -418,7 +418,7 @@
       $contentRow = $(
         '<tr class="content-row" style="display: block;">' +
         '<td colspan="3">' +
-        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '</p>' +
+        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + '<h3>' + content + '</h3>' + '</p>' +
         '</td>' +
         '</tr>'
       );
@@ -437,33 +437,37 @@
 
         $(result).each((key, value) => {
 
+          let rawDate = new Date(value.regDate);
+          let formattedDate = String(rawDate.getFullYear()).slice(-2) + '/' +
+            String(rawDate.getMonth() + 1).padStart(2, '0') + '/' +
+            String(rawDate.getDate()).padStart(2, '0') + '  ' +
+            String(rawDate.getHours()) + ':' +
+            String(rawDate.getMinutes());
 
 
-          if(value.writer === "admin"){
+          if (value.writer === "admin") {
 
 
             $contentRow.append(
               '<div style="width: 100%;">' +
               '<tr class="answer-row">' +
               '<td colspan="3">' +
-              '<p>' + '<span class="badge text-bg-danger" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
+              '<p>' + '<span class="badge text-bg-danger" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + formattedDate + ")" + '</p>' +
               '</td>' +
               '</tr>' +
               '</div>'
             )
-          }
-          else{
+          } else {
             $contentRow.append(
               '<div style="width: 100%;">' +
               '<tr class="answer-row">' +
               '<td colspan="3">' +
-              '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
+              '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "작성자)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + formattedDate + ")" + '</p>' +
               '</td>' +
               '</tr>' +
               '</div>'
             )
           }
-
 
 
           /*
