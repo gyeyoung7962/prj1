@@ -1,10 +1,7 @@
 package com.prj1.mapper;
 
 
-import com.prj1.domain.Product;
-import com.prj1.domain.ProductImg;
-import com.prj1.domain.ProductQnA;
-import com.prj1.domain.ProductReview;
+import com.prj1.domain.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -106,4 +103,18 @@ public interface ShopMapper {
             where p.id = #{productId}
             """)
     int countQnA(Integer productId);
+
+    @Insert("""
+            insert into comment_qna(product_qna_id, content, writer)
+            values(#{productQnAId}, #{content}, #{writer})
+            """)
+    void addComment(CommentQnA commentQnA);
+
+    @Select("""
+            select cq.writer, cq.content, cq.regDate
+            from comment_qna cq join product_qna pq
+            on cq.product_qna_id = pq.id
+            where pq.id = #{productQnAId}
+            """)
+    List<CommentQnA> commentList(Integer productQnAId);
 }

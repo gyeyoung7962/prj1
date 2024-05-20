@@ -37,16 +37,16 @@
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
-<div class="container mt-5">
-    <div class="row col-md-10" style="margin: 0 auto;">
+<div class="container mt-5 col-lg-12">
+    <div class="row col-md-12 col-lg-10" style="margin: 0 auto;">
 
         <div class="row">
-            <div class="col-md-6" style="display: flex; justify-content: center;">
-                <div style="width:350px; height:350px;">
+            <div class="col-md-12 col-lg-6" style="display: flex; justify-content: center; margin: 0 auto;">
+                <div style="width:100%; height:100%; max-width: 100%; max-height: 500px; margin: 0 auto;">
                     <img src="/upload/${mainImage}" style="width:100%; height:100%; text-align: center;">
                 </div>
 
-                <div style="display: block;">
+                <div style="display: block; width: 1px;">
                     <div style="width:100px; height:100px">
                         <c:forEach items="${subImageList}" var="subImg">
                             <img src="/upload/${subImg.path}" style="width:100%; height:100%;">
@@ -57,25 +57,26 @@
                 </div>
             </div>
 
-            <div class="col-md-6"
+
+            <div class="col-md-12 col-lg-6"
                  style="text-align: center; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                 <p style="font-size: 2rem" class="form-control-plaintext">${product.name}</p>
 
                 <hr/>
-                <div class="row col-md-12 mb-2" style="">
-                    <div class="col-md-4">
+                <div class="row col-sm-12 col-md-12 mb-2" style="">
+                    <div class="col-sm-6 col-md-4 col-lg-6">
                         <label for="InputQuantity" class="form-control-plaintext">재고</label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-sm-6 col-md-8 col-lg-6">
                         <p class="form-control-plaintext">${product.stock}</p>
                     </div>
                 </div>
 
                 <div class="row col-md-12 mb-2" style="">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-lg-6">
                         <label for="InputQuantity" class="form-control-plaintext">수량</label>
                     </div>
-                    <div class="col-md-5" style="margin: 0 auto;">
+                    <div class="col-md-5 col-lg-6" style="margin: 0 auto;">
                         <div style="display: flex;">
                             <div class="col-md-3">
                                 <button class="btn btn-dark" id="minus">-</button>
@@ -91,18 +92,17 @@
                 </div>
 
 
-                <div class="row col-md-12" style="">
-                    <hr/>
-                    <div class="col-md-4">
+                <div class="row col-md-12 col-lg-12" style="">
+
+                    <div class="col-md-4 col-lg-6">
                         <label for="InputPrice" class="form-control-plaintext">가격</label>
                     </div>
-                    <div class="col-md-7">
-                        <p class="form-control-plaintext" id="InputPrice">${product.price}</p>
+                    <div class="col-md-7 col-lg-6">
+                        <p class="form-control-plaintext" id="InputPrice">${product.price}원</p>
                     </div>
                 </div>
-                <hr/>
-                <div class="row mt-2" style="display: flex;">
-                    <div class="col-md-12">
+                <div class="row col-lg-12 mt-5" style="display: flex; justify-content: center;">
+                    <div class="col-md-12 col-lg-12 p-2">
                         <button class="btn btn-primary">장바구니</button>
                         <button class="btn btn-success">구매</button>
                     </div>
@@ -112,9 +112,10 @@
         </div>
     </div>
 
-    <div class="row mt-5 col-md-10" style="text-align: center; margin: 0 auto;" id="product_tab">
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <div class="col-md-4">
+    <div class="row mt-5 col-sm-12 col-md-12 col-lg-12"
+         style="text-align: center; margin: 0 auto; justify-content: center;" id="product_tab">
+        <ul class="nav nav-pills mb-3 col-sm-12 col-md-12 col-lg-12" id="pills-tab" role="tablist">
+            <div class="col-sm-4 col-md-4 col-lg-4">
                 <li class="nav-item onShow" role="presentation">
                     <a href="#tab1" class="nav-link active tabBtn" data-bs-toggle="pill"
                        data-bs-target="#pills-home"
@@ -124,7 +125,7 @@
                 </li>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-sm-4 col-md-4 col-lg-4">
                 <li class="nav-item" role="presentation">
                     <a href="#tab2" class="nav-link tabBtn" data-bs-toggle="pill" data-bs-target="#pills-profile"
                        type="button"
@@ -133,7 +134,7 @@
                     </a>
                 </li>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4 col-md-4 col-lg-4">
                 <li class="nav-item" role="presentation">
                     <a href="#tab3" class="nav-link tabBtn" data-bs-toggle="pill" data-bs-target="#pills-profile"
                        type="button"
@@ -195,7 +196,7 @@
                 <c:if test="${countQnA == 0}">
                     <tr>
                         <td colspan="12" style="text-align: center;">
-                            <p class="alert alert-danger" id="contentQnA">작성된 문의글이 없습니다</p>
+                            <p class="alert alert-danger">작성된 문의글이 없습니다</p>
                         </td>
                     </tr>
                 </c:if>
@@ -227,35 +228,9 @@
 <div id="contentDisplayArea">
 </div>
 
-<sec:authentication property="principal.member" var="writerQnA"/>
-<!-- Modal -->
-<%--
-<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="contentModalLabel">상세내용</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- 모달 내용이 여기에 들어갑니다. -->
-            </div>
-            <div class="modal-footer" id="modalAddQnA">
-
-                <sec:authorize access="isAuthenticated()">
-                    <sec:authentication property="principal.member" var="writerQnA"/>
-                    <c:if test="${writerQnA.nickName == writerList}">
-
-
-                    </c:if>
-                </sec:authorize>
-                <hr/>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
---%>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal.member" var="writerQnA"/>
+</sec:authorize>
 
 <script>
 
@@ -404,7 +379,7 @@
 
           $("#areaQnA").append(
             '<tr>' +
-            '<td>' + '<p class="view-content" data-id="' + value.id + '" data-content="' + value.content + '" + data-writer = "' + value.writer + '">' + value.title + '</p>' + '</td>' +
+            '<td>' + '<p class="view-content" data-id="' + value.id + '" data-content="' + value.content + '" + data-writer = "' + value.writer + '" + style="cursor: pointer;">' + value.title + '</p>' + '</td>' +
             '<td>' + value.writer + '</td>' +
             '<td>' + formattedDate + '</td>' +
             +'</tr>'
@@ -422,31 +397,61 @@
     let content = $(this).data('content');
     let writer = $(this).data('writer');
 
-    console.log(id);
 
     let $contentRow;
+
+
+    console.log(id);
+
 
     if ((writerName === writer) || (writerName === "admin")) {
 
       $contentRow = $(
-        '<tr class="content-row">' +
+        '<tr class="content-row" style="display: block;">' +
         '<td colspan="3">' +
-        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '<span class="badge text-bg-light" id="answerQnA" data-id="' + id + '">' + "답변" + "</span>" + '</p>' +
+        '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '<span class="badge text-bg-light" id="answerQnA" data-id="' + id + '" style="cursor:pointer;">' + "답변" + "</span>" + '</p>' +
         '</td>' +
         '</tr>'
       );
     } else {
       console.log('작성자가 다릅니다');
       $contentRow = $(
-        '<tr class="content-row">' +
+        '<tr class="content-row" style="display: block;">' +
         '<td colspan="3">' +
         '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "내용)" + '</span>' + content + '</p>' +
         '</td>' +
         '</tr>'
       );
-
     }
 
+    $.get({
+
+      url: "/shop/commentList",
+      data: {
+        productQnAId: id
+      },
+      success: function (result) {
+
+        console.log("리스트 성공");
+
+        $(result).each((key, value) => {
+
+          $contentRow.append(
+            '<div style="width: 100%;">' +
+            '<tr class="answer-row">' +
+            '<td colspan="3">' +
+            '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
+            '</td>' +
+            '</tr>' +
+            '</div>'
+          )
+        });
+
+      },
+      error: function (error) {
+        console.log("에러:" + error);
+      }
+    });
 
     $(".content-row").remove();
     $(this).closest('tr').after($contentRow);
@@ -456,15 +461,37 @@
 
     let id = $(this).data('id');
 
-    /*
-    $.post({
-      url : "/shop/addQnAComment"
+    let $commentRow;
+    $commentRow = $(
+      '<tr class="comment-row">' +
+      '<td colspan="3">' +
+      '<textarea style="resize: none;" id="content" placeholder="답변을 작성하세요" class="form-control">' + '</textarea>' +
+      '<button class="btn btn-secondary" onclick="addComment(' + id + ')">' + "확인" + '</button>' +
+      '</td>' +
+      '</tr>'
+    );
 
-    });
-     */
-
-
+    $(".comment-row").remove();
+    $(this).closest('tr').after($commentRow);
   });
+
+  function addComment(id) {
+    $.post({
+      url: "/shop/addComment",
+      data: {
+        productQnAId: id,
+        content: $("#content").val(),
+        writer: writerName,
+        productId: ${product.id}
+      },
+      success: function () {
+        console.log("답변 완료");
+      },
+      error: function (error) {
+        console.log("에러:" + error);
+      }
+    });
+  }
 
 
   function addQnA() {

@@ -309,3 +309,21 @@ on p.id = pq.product_id
 where p.id = 4
 order by pq.id;
 
+create table comment_qna(
+    id int auto_increment primary key,
+    product_qna_id int references product_qna(id),
+    content varchar(2000),
+    writer varchar(100),
+    regDate datetime default now()
+);
+
+select *
+from comment_qna;
+drop table comment_qna;
+
+
+select cq.writer, cq.content, cq.regDate
+from comment_qna cq join product_qna pq
+on cq.product_qna_id = pq.id
+where pq.id = 9;
+

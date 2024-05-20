@@ -98,4 +98,25 @@ public class ShopService {
 
         return mapper.countQnA(productId);
     }
+
+    public void addComment(CommentQnA commentQnA, Authentication authentication) {
+
+        if (authentication == null) {
+            return;
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof CustomUser user) {
+            Member member = user.getMember();
+            commentQnA.setWriter(member.getNickName());
+            mapper.addComment(commentQnA);
+        }
+    }
+
+    public List<CommentQnA> commentList(Integer productQnAId) {
+
+        return mapper.commentList(productQnAId);
+    }
 }
+

@@ -39,7 +39,6 @@ public class ShoppingController {
         List<ProductQnA> list = service.listQnA(id);
 
 
-
         //메인이미지 조회
         String mainImage = service.selectMainImage(id);
 
@@ -123,6 +122,33 @@ public class ShoppingController {
 
         return countQnA;
     }
+
+    @PostMapping("/addComment")
+    public String addComment(CommentQnA commentQnA, @RequestParam("productId") Integer productId, Authentication authentication) {
+
+        System.out.println("상품번호:"+ productId);
+
+        if (authentication == null) {
+            return "redirect:/member/login";
+        } else if (authentication != null) {
+            service.addComment(commentQnA, authentication);
+            return "redirect:/shop/productInfo?id=" + productId;
+        }
+        return null;
+    }
+
+    @GetMapping("/commentList")
+    @ResponseBody
+    public List<CommentQnA> commentList(@RequestParam("productQnAId") Integer productQnAId){
+
+        List<CommentQnA> list = service.commentList(productQnAId);
+
+        list.forEach(System.out::println);
+
+        return list;
+
+    }
+
 
 
 }
