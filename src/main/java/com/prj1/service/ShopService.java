@@ -2,11 +2,13 @@ package com.prj1.service;
 
 
 import com.prj1.domain.*;
+import com.prj1.mapper.MemberMapper;
 import com.prj1.mapper.ShopMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,13 +17,12 @@ import java.util.List;
 public class ShopService {
 
     private final ShopMapper mapper;
+    private final MemberMapper memberMapper;
 
     public List<Product> shopProductList() {
 
         return mapper.shopProductList();
-
     }
-
 
     public Product shopProductInfo(Integer id) {
 
@@ -117,6 +118,43 @@ public class ShopService {
     public List<CommentQnA> commentList(Integer productQnAId) {
 
         return mapper.commentList(productQnAId);
+    }
+
+    public void addCart(Cart cart) {
+
+        mapper.add(cart);
+
+
+//        Member member = memberMapper.infoMember(cart.getMemberId());
+
+//        System.out.println(member);
+
+//        System.out.println(mapper.selectCartProductId(member.getEmail()));
+
+//         if(productId == cart.getProductId()){
+//             System.out.println("주문한 물건이 같아서 수량을 올려야합니다");
+//         }
+//         if(productId != cart.getProductId()){
+//             System.out.println("장바구니에 "+cart.getProductId()+"의 상품이 없어서 추가합니다");
+//             mapper.add(cart);
+//         }
+
+    }
+
+    public Cart selectCartItem(Integer id, String nickName) {
+
+        return mapper.selectCartItem(id,nickName);
+
+    }
+
+    public void updateCart(Cart cart) {
+
+        mapper.updateCart(cart);
+    }
+
+    public List<Cart> cartList(Integer memberId) {
+
+        return mapper.cartList(memberId);
     }
 }
 

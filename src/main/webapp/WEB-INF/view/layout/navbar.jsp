@@ -23,7 +23,7 @@
 </style>
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(40,121,176,0.8)">
     <div class="container">
-        <a class="navbar-brand text-white fs-3" href="/" style="font-weight: bold;">Project</a>
+        <a class="navbar-brand text-white fs-3" href="/" style="font-weight: bold;"><span style="color: plum; font-size: 2rem;">Z</span>er0<span style="color: darkslategrey;">#</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -61,6 +61,12 @@
 
                     <sec:authorize access="isAuthenticated()">
                         <sec:authentication property="principal.member" var="member"/>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white fs-6"
+                               href="/shop/cartList?id=${member.id}">장바구니</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-white fs-6"
                                href="/member/info?id=${member.id}">${member.nickName}</a>

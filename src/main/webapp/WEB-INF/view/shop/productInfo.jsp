@@ -43,13 +43,15 @@
         <div class="row">
             <div class="col-md-12 col-lg-6" style="display: flex; justify-content: center; margin: 0 auto;">
                 <div style="width:100%; height:100%; max-width: 100%; max-height: 500px; margin: 0 auto;">
-                    <img src="/upload/${mainImage}" class="img-responsive rounded img-thumbnail" style="width:100%; height:100%; text-align: center;">
+                    <img src="/upload/${mainImage}" class="img-responsive rounded img-thumbnail"
+                         style="width:100%; height:100%; text-align: center;">
                 </div>
 
                 <div style="display: block; width: 1px;">
                     <div style="width:100px; height:100px">
                         <c:forEach items="${subImageList}" var="subImg">
-                            <img src="/upload/${subImg.path}" style="width:100%; height:100%;">
+                            <img src="/upload/${subImg.path}" style="width:100%; height:100%;"
+                                 class="img-responsive rounded img-thumbnail">
                         </c:forEach>
                     </div>
                     <div style="display:flex; width:100px; height:100px">
@@ -103,7 +105,27 @@
                 </div>
                 <div class="row col-lg-12 mt-5" style="display: flex; justify-content: center;">
                     <div class="col-md-12 col-lg-12 p-2">
-                        <button class="btn btn-primary">장바구니</button>
+
+
+                        <div id="area_cartMessage" style="">
+                            <%--
+                                                        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                                            <div class="toast-header">
+                                                                <strong class="me-auto">알림</strong>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="toast-body">
+                                                                <img src="/upload/${mainImage}" class="rounded me-2" alt="..." style="width:100%; height:100%; max-width:50px; max-height:50px;">
+                                                                <p class="text-primary">장바구니에 상품이 담겼습니다</p>
+                                                            </div>
+                                                            <div class="mt-2 pt-2 border-top">
+                                                                <button type="button" class="btn btn-primary btn-sm">장바구니 이동</button>
+                                                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">닫기</button>
+                                                            </div>
+                                                        </div>
+                                                        --%>
+                        </div>
+                        <button class="btn btn-primary" onclick="addCart()" id="addBtnCart">장바구니</button>
                         <button class="btn btn-success">구매</button>
                     </div>
                 </div>
@@ -238,6 +260,8 @@
   listQnA();
   reviewAvgScore();
   reviewList();
+
+  console.log($("#InputQuantity").val());
 
 
   function reviewList() {
@@ -468,22 +492,7 @@
               '</div>'
             )
           }
-
-
-          /*
-          $contentRow.append(
-            '<div style="width: 100%;">' +
-            '<tr class="answer-row">' +
-            '<td colspan="3">' +
-            '<p>' + '<span class="badge text-bg-secondary" style="text-indent: 10%;">' + "답변내용)" + '</span>' + value.content + '<span style="padding-left:20px">' + value.writer + "(" + value.regDate + ")" + '</p>' +
-            '</td>' +
-            '</tr>' +
-            '</div>'
-          )
-           */
-
         });
-
       },
       error: function (error) {
         console.log("에러:" + error);
@@ -569,7 +578,6 @@
     });
   }
 
-
   ClassicEditor
     .create(document.querySelector('#editor'), {
       language: 'ko',
@@ -623,7 +631,36 @@
     const count = parseInt(quantityVal) + 1
     $("#InputQuantity").text(count);
     $("#InputPrice").html(count * priceVal + "원");
+
   });
+
+  function addCart() {
+
+    let priceText = $("#InputPrice").text();
+    let priceNumber = priceText.replace(/[가-힣]/g, '');
+
+
+    $.post({
+
+      url: "/shop/addCart",
+      data: {
+        productId: ${product.id},
+        memberId: ${writerQnA.id},
+        quantity: parseInt($("#InputQuantity").text(), 10),
+        price: priceNumber
+      },
+      success: function () {
+
+        alert("담기 완료");
+        $("#area_cartMessage").append(
+          '<p class="alert alert-primary">' + "상품이 담겼습니다" + '</p>'
+        );
+      },
+      error: function (err) {
+        console.log("에러:" + err);
+      }
+    });
+  }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"

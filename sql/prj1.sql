@@ -58,6 +58,10 @@ create table product
     subCategory_id int references subCategory (subCategory_id)
 );
 
+alter table product
+    drop column quantity;
+
+
 create table category
 (
     category_id   int primary key auto_increment,
@@ -128,20 +132,95 @@ create table product_review
 
 create table product_qna
 (
-    id int auto_increment primary key,
-    title varchar(100),
-    content varchar(2000),
-    writer varchar(100),
-    regDate datetime default now(),
-    product_id int references product(id)
+    id         int auto_increment primary key,
+    title      varchar(100),
+    content    varchar(2000),
+    writer     varchar(100),
+    regDate    datetime default now(),
+    product_id int references product (id)
 );
 
-create table comment_qna(
-    id int auto_increment primary key,
-    product_qna_id int references product_qna(id),
-    content varchar(2000),
-    writer varchar(100),
-    regDate datetime default now()
+create table comment_qna
+(
+    id             int auto_increment primary key,
+    product_qna_id int references product_qna (id),
+    content        varchar(2000),
+    writer         varchar(100),
+    regDate        datetime default now()
 );
 
+create table cart
+(
+    id         int primary key auto_increment,
+    product_id int references product (id),
+    member_id  int references member (id),
+    quantity   int      default 1,
+    price      int,
+    regDate    datetime default now()
+);
+alter table cart add column path varchar(200);
+alter table cart add column name varchar(100);
 
+desc cart;
+
+
+select m.email, m.nick_name, p.name, c.quantity, c.price
+from cart c
+         join member m
+              on c.member_id = m.id
+         join product p
+              on p.id = c.product_id;
+
+select m.email, m.nick_name, p.name, c.quantity, c.price
+from cart c
+         join member m
+              on c.member_id = m.id
+         join product p
+              on p.id = c.product_id
+where m.email = 'admin@naver.com'
+  and p.id = 14;
+
+select c.product_id
+from cart c
+         join member m
+              on c.member_id = m.id
+         join product p
+              on p.id = c.product_id
+where m.email = 'admin@naver.com';
+
+select *
+from cart;
+
+select *
+from product;
+
+select *
+from member;
+
+select c.product_id
+from cart c
+         join member m
+              on c.member_id = m.id
+         join product p on c.product_id = p.id
+where p.id = 11;
+
+select c.product_id, p.name, c.quantity, c.price, pi.path, c.regDate
+from cart c
+         join member m
+              on c.member_id = m.id
+         join product p on c.product_id = p.id
+        join product_img pi
+        on pi.product_id = p.id
+where m.id = 8
+order by c.regDate desc;
+
+select *
+from cart
+where product_id = 1;
+
+select *
+from cart
+where member_id = 8;
+
+desc product;
+desc product_img;

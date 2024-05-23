@@ -1,6 +1,8 @@
 package com.prj1.controller;
 
 import com.prj1.domain.*;
+import com.prj1.service.MemberService;
+import com.prj1.service.ProductService;
 import com.prj1.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ShoppingController {
 
     private final ShopService service;
+    private final MemberService memberService;
 
     @GetMapping("/list")
     public void getShopList(Model model) {
@@ -126,7 +129,7 @@ public class ShoppingController {
     @PostMapping("/addComment")
     public String addComment(CommentQnA commentQnA, @RequestParam("productId") Integer productId, Authentication authentication) {
 
-        System.out.println("상품번호:"+ productId);
+        System.out.println("상품번호:" + productId);
 
         if (authentication == null) {
             return "redirect:/member/login";
@@ -139,16 +142,53 @@ public class ShoppingController {
 
     @GetMapping("/commentList")
     @ResponseBody
-    public List<CommentQnA> commentList(@RequestParam("productQnAId") Integer productQnAId){
+    public List<CommentQnA> commentList(@RequestParam("productQnAId") Integer productQnAId) {
 
         List<CommentQnA> list = service.commentList(productQnAId);
 
         list.forEach(System.out::println);
 
         return list;
-
     }
 
+    @PostMapping("/addCart")
+    @ResponseBody
+    public String addCart(Cart cart) {
+
+        //카트에 담긴 회원아이디로 회원정보 조회
+        Member member = memberService.infoMember(cart.getMemberId());
+
+        //카트에 담긴 상품아이디로 상품정보 조회
+        Product product = service.shopProductInfo(cart.getProductId());
+
+        Cart cartItem = service.selectCartItem(product.getId(), member.getNickName());
+
+        System.out.println("member = " + member);
+        System.out.println("product = " + product);
+        System.out.println("cartItem = " + cartItem);
+
+        System.out.println("========= 확인===");
+        if (cartItem == null) {
+            System.out.println("상품 추가");
+            service.addCart(cart);
+        } else {
+            System.out.println("수량 증가" + cart.getQuantity());
+            service.updateCart(cart);
+        }
+
+        return null;
+    }
+
+    @GetMapping("/cartList")
+    public void getCartList(@RequestParam("id")Integer memberId, Model model){
+
+        List<Cart> cart = service.cartList(memberId);
+
+        cart.forEach(System.out::println);
+
+        model.addAttribute("cartList", cart);
+
+    }
 
 
 }

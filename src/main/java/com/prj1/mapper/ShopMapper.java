@@ -5,6 +5,7 @@ import com.prj1.domain.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -117,4 +118,50 @@ public interface ShopMapper {
             where pq.id = #{productQnAId}
             """)
     List<CommentQnA> commentList(Integer productQnAId);
+
+    @Insert("""
+            insert into cart(product_id, member_id, quantity, price)
+            values (#{productId}, #{memberId}, #{quantity}, #{price})
+            """)
+    void add(Cart cart);
+
+
+    @Select("""
+            select c.product_id
+            from cart c join member m
+                             on c.member_id = m.id
+                        join product p
+                             on p.id = c.product_id
+            where m.email = #{email}
+            """)
+    int selectCartProductId(String email);
+
+    @Select("""
+            select c.product_id, c.quantity, c.price
+            from cart c join member m
+                             on c.member_id = m.id
+                        join product p on c.product_id = p.id
+            where p.id = #{id} and m.nick_name = #{nickName}
+            """)
+    Cart selectCartItem(Integer id, String nickName);
+
+    @Update("""
+            update cart
+            set quantity = cart.quantity +#{quantity}, price = price + #{price}
+            where product_id = #{productId}
+            """)
+    void updateCart(Cart cart);
+
+    @Select("""
+            select c.product_id, p.name, c.quantity, c.price, pi.path, c.regDate
+            from cart c
+                     join member m
+                          on c.member_id = m.id
+                     join product p on c.product_id = p.id
+                    join product_img pi
+                    on pi.product_id = p.id
+            where m.id = #{memberId}
+            order by c.regDate desc;
+            """)
+    List<Cart> cartList(Integer memberId);
 }
