@@ -120,8 +120,8 @@ public interface ShopMapper {
     List<CommentQnA> commentList(Integer productQnAId);
 
     @Insert("""
-            insert into cart(product_id, member_id, quantity, price)
-            values (#{productId}, #{memberId}, #{quantity}, #{price})
+            insert into cart(product_id, member_id, quantity, price, original_price)
+            values (#{productId}, #{memberId}, #{quantity}, #{price}, #{originalPrice})
             """)
     void add(Cart cart);
 
@@ -153,7 +153,7 @@ public interface ShopMapper {
     void updateCart(Cart cart);
 
     @Select("""
-            select c.product_id, p.name, c.quantity, c.price, pi.path, c.regDate
+            select  c.original_price ,c.product_id, p.name, c.quantity, c.price, pi.path, c.regDate
             from cart c
                      join member m
                           on c.member_id = m.id
@@ -161,7 +161,7 @@ public interface ShopMapper {
                     join product_img pi
                     on pi.product_id = p.id
             where m.id = #{memberId}
-            order by c.regDate desc;
+            order by c.regDate desc
             """)
     List<Cart> cartList(Integer memberId);
 }

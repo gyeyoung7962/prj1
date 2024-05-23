@@ -15,4 +15,6 @@ public class Cart {
     private Integer price;
     private Integer quantity;
     private String path;
+
+    private Integer originalPrice;
 }

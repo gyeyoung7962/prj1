@@ -160,6 +160,7 @@ create table cart
 );
 alter table cart add column path varchar(200);
 alter table cart add column name varchar(100);
+alter table cart add column original_price int;
 
 desc cart;
 
@@ -204,7 +205,7 @@ from cart c
          join product p on c.product_id = p.id
 where p.id = 11;
 
-select c.product_id, p.name, c.quantity, c.price, pi.path, c.regDate
+select c.product_id, c.original_price , p.name, c.quantity, c.price, pi.path, c.regDate
 from cart c
          join member m
               on c.member_id = m.id
@@ -224,3 +225,6 @@ where member_id = 8;
 
 desc product;
 desc product_img;
+
+delete from
+           cart where member_id = 8;

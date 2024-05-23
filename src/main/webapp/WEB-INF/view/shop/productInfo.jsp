@@ -647,7 +647,8 @@
         productId: ${product.id},
         memberId: ${writerQnA.id},
         quantity: parseInt($("#InputQuantity").text(), 10),
-        price: priceNumber
+        price: priceNumber,
+        originalPrice : ${product.price}
       },
       success: function () {
 
