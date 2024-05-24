@@ -17,12 +17,13 @@
 <body>
 <c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
-<div class="container mt-5 col-md-12 col-lg-12">
+<div class="container mt-5 col-sm-12 col-md-12 col-lg-12">
     <h3>Cart</h3>
     <hr/>
     <table class="table" style="text-align: center; align-items: center;">
         <thead>
         <tr>
+            <th>체크</th>
             <th>상품명</th>
             <th>사진</th>
             <th>수량</th>
@@ -34,7 +35,7 @@
 
         <c:if test="${cartList == null || cartList.isEmpty()}">
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     <p class="alert alert-danger">장바구니 상품이 비어있습니다</p>
                 </td>
             </tr>
@@ -43,6 +44,9 @@
 
         <c:forEach items="${cartList}" var="item">
             <tr class="cartItem" data-price="${item.originalPrice}" data-quantity="${item.quantity}">
+                <td>
+                    <input class="form-check-input select-item" type="checkbox" value="" id="ckBox" checked>
+                </td>
                 <td>${item.name}</td>
                 <td>
                     <img src="/upload/${item.path}" alt=""
@@ -73,18 +77,19 @@
     </table>
     <hr/>
 </div>
-<div class="row col-4 p-5" style="margin: 0 auto; text-align: center; align-items: center; font-size: x-large">
-    <div class="col-4">
+<div class="row col-lg-4 col-md-12 p-5"
+     style="margin: 0 auto; text-align: center; align-items: center; font-size: x-large">
+    <div class="col-lg-4 col-md-4 w-100">
         <p class="text-primary">총 금액</p>
     </div>
-    <div class="col-4">
+    <div class="col-lg-4 col-md-4 w-100">
         <p class="text-danger" id="totalPrice">원</p>
     </div>
-    <div class="col-4">
-        <div class="col-6">
+    <div class="row col-md-4 col-lg-12 w-100">
+        <div class="col-md-6">
             <button class="btn btn-danger w-100">구매</button>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
             <button class="btn btn-secondary w-100">취소</button>
         </div>
     </div>
@@ -92,61 +97,80 @@
 
 
 <script>
-
   updateTotalPrice();
-
 
   function updateTotalPrice() {
 
     let totalPrice = 0;
+    $(".select-item:checked").each(function () {
 
-    $(".cartItem").each(function () {
-      const price = $(this).find(".price").text().replace('원', '');
-      totalPrice += parseInt(price);
+      const cartItem = $(this).closest('.cartItem'); //체크를 선택한 상품의 cartItem 태그
+      const price = cartItem.data("price") // 오리지널 상품가격
+      const quantity = parseInt(cartItem.find(".quantity").text());
+
+      totalPrice += price * quantity;
     });
     $("#totalPrice").text(totalPrice + "원");
   }
 
-  $(document).on('click', '.plus', function () {
+  $(document).on('change', '.select-item', updateTotalPrice);
+
+  $(document).on('click', '#plus', function () {
+
     const cartItem = $(this).closest('.cartItem');
     const quantityElem = cartItem.find('.quantity');
-    const priceElem = cartItem.find('.price');
-    const basePrice = cartItem.data('price');
     let quantity = parseInt(quantityElem.text());
+
+    const price = cartItem.data("price");
+
+    console.log("오리지널 값:" + price);
+    console.log("증가값:" + quantity);
 
     quantity += 1;
-    quantityElem.text(quantity);
 
-    const newPrice = basePrice * quantity;
-    priceElem.text(newPrice + "원");
-
-    updateTotalPrice();
-  });
-
-  $(document).on('click', '.minus', function () {
-    const cartItem = $(this).closest('.cartItem');
-    const quantityElem = cartItem.find('.quantity');
-    const priceElem = cartItem.find('.price');
-    const basePrice = cartItem.data('price');
-    let quantity = parseInt(quantityElem.text());
-
-
-    // Increase quantity
-    quantity -= 1;
-    if (quantity == 0) {
-      alert("더이상 수량을 줄일수가 없습니다");
-      $("#minus").attr("disabled", "true");
-      return true;
-
+    if (quantity > 1) {
+      cartItem.find("#minus").attr("disabled", false);
     }
     quantityElem.text(quantity);
 
-    // Update price based on the new quantity
-    const newPrice = basePrice * quantity;
-    priceElem.text(newPrice + "원");
+    cartItem.find(".price").text(price * quantity + "원");
 
     updateTotalPrice();
   });
+
+  $(document).on('click', '#minus', function () {
+
+    const cartItem = $(this).closest(".cartItem");
+    const price = cartItem.data("price");
+    const quantityElem = cartItem.find(".quantity")
+    let quantity = parseInt(quantityElem.text());
+
+    const priceElem = cartItem.find("#InputPrice");
+
+    quantity -= 1;
+
+    if (quantity == 0) {
+
+      quantity = 1;
+
+      quantityElem.text(quantity);
+
+      cartItem.find("#minus").attr("disabled", true);
+      alert("최소수량입니다");
+    } else if (quantity > 1) {
+      cartItem.find("#minus").attr("disabled", false);
+    }
+
+    quantityElem.text(quantity);
+
+    priceElem.text(quantity * price + "원");
+
+    console.log(quantity);
+
+    updateTotalPrice();
+
+  });
+
 
 </script>
 

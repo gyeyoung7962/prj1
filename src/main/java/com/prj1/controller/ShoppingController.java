@@ -5,6 +5,7 @@ import com.prj1.service.MemberService;
 import com.prj1.service.ProductService;
 import com.prj1.service.ShopService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,6 +181,7 @@ public class ShoppingController {
     }
 
     @GetMapping("/cartList")
+    @PreAuthorize("isAuthenticated()")
     public void getCartList(@RequestParam("id")Integer memberId, Model model){
 
         List<Cart> cart = service.cartList(memberId);
