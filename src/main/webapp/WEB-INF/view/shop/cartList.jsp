@@ -45,9 +45,9 @@
         <c:forEach items="${cartList}" var="item">
             <tr class="cartItem" data-price="${item.originalPrice}" data-quantity="${item.quantity}">
                 <td>
-                    <input class="form-check-input select-item" type="checkbox" value="" id="ckBox" checked>
+                    <input class="form-check-input select-item p-2" type="checkbox" value="" id="ckBox" checked>
                 </td>
-                <td>${item.name}</td>
+                <td class="p-3"><p class="alert alert-dark" style="margin-bottom:0">${item.name}</p></td>
                 <td>
                     <img src="/upload/${item.path}" alt=""
                          style="width:100%; height:100%; max-width:200px; max-height:200px;">
@@ -57,13 +57,13 @@
                         <div class="col-12" style="margin: 0 auto;">
                             <div style="display: flex;">
                                 <div class="col-md-3">
-                                    <button class="btn btn-dark minus" id="minus">-</button>
+                                    <button class="btn btn-dark minus p-2" id="minus">-</button>
                                 </div>
                                 <div class="col-md-6" style="margin: 0 auto; text-align: center;">
-                                    <p class="form-control-plaintext quantity" id="InputQuantity">${item.quantity}</p>
+                                    <p class="form-control-plaintext quantity p-2" id="InputQuantity">${item.quantity}</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-dark plus" id="plus">+</button>
+                                    <button class="btn btn-dark plus p-2" id="plus">+</button>
                                 </div>
                             </div>
                         </div>
@@ -87,10 +87,10 @@
     </div>
     <div class="row col-md-4 col-lg-12 w-100">
         <div class="col-md-6">
-            <button class="btn btn-danger w-100">구매</button>
+            <button class="btn btn-danger w-100 p-3">구매</button>
         </div>
         <div class="col-md-6">
-            <button class="btn btn-secondary w-100">취소</button>
+            <button class="btn btn-secondary w-100 p-3">취소</button>
         </div>
     </div>
 </div>
