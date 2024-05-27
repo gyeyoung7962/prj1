@@ -10,14 +10,15 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <style>
-    #pills-tab{
+    #pills-tab {
         overflow: hidden;
     }
+
     .cont {
         display: none;
     }
 
-    .tabActive{
+    .tabActive {
         display: block;
     }
 
@@ -30,7 +31,8 @@
     <h3>카테고리 설정</h3>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item onShow" role="presentation">
-            <a href="#tab1" class="nav-link active tabBtn" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
+            <a href="#tab1" class="nav-link active tabBtn" data-bs-toggle="pill" data-bs-target="#pills-home"
+               type="button"
                role="tab" aria-controls="pills-home" aria-selected="true">추가
             </a>
         </li>
@@ -77,7 +79,7 @@
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-primary">추가</button>
+                <button class="btn btn-primary" onclick="addSubCategory()">추가</button>
             </div>
         </div>
     </div>
@@ -127,6 +129,11 @@
       url: "/admin/getCategory",
       success: function (result) {
 
+        $(".selectCategory").append(
+          '<option>' + "선택" + '</option>'
+        );
+
+
         $(result).each((key, value) => {
           $(".selectCategory").append(
             '<option value=' + value.categoryId + '>' + value.categoryName + '</option>'
@@ -151,6 +158,7 @@
 
         alert("추가 완료");
         $("#InsertCategory").val('');
+        $(".selectCategory").empty();
         categoryList();
       },
       error: function (error) {
@@ -171,11 +179,18 @@
 
         $(".subCategoryList option").remove();
 
-        $(result).each((key, value) => {
+
+        if (result.length === 0) {
           subCateList.append(
-            '<option value=' + value.subCategoryId + '>' + value.subCategoryName + '</option>'
+            '<option>' + "항목이 존재하지않습니다" + '</option>'
           );
-        })
+        } else {
+          $(result).each((key, value) => {
+            subCateList.append(
+              '<option value=' + value.subCategoryId + '>' + value.subCategoryName + '</option>'
+            );
+          })
+        }
       },
       error: function (error) {
         console.log(error);
@@ -184,25 +199,47 @@
     });
   }
 
-  $("#pills-tab li").on('click', function(e){
+
+  function addSubCategory() {
+
+    const categorySelected = $(".selectCategory option:selected").val();
+
+    $.post({
+      url: "/admin/addSubCategory",
+      data: {
+
+        parentCategoryId: categorySelected,
+        subCategoryName: $("#InsertSubCategory").val()
+      },
+      success: function () {
+
+        alert("추가 완료");
+        $("#InsertSubCategory").val('');
+        showSubList();
+      },
+      error: function (error) {
+        console.log(error + "오류 발생");
+      }
+    });
+  }
+
+
+  $("#pills-tab li").on('click', function (e) {
 
     const index = $(this).index();
 
-    console.log('index='+index);
+    console.log('index=' + index);
 
-    if(index == 0){
+    if (index == 0) {
 
       $("#tab2").hide();
       $("#tab1").show();
     }
-    if(index == 1){
+    if (index == 1) {
       $("#tab1").hide();
       $("#tab2").show();
     }
   });
-
-
-
 
 
 </script>

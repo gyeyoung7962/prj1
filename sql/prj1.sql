@@ -228,3 +228,7 @@ desc product_img;
 
 delete from
            cart where member_id = 8;
+
+
+select *
+from subCategory;

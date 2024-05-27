@@ -58,6 +58,7 @@ public class AdminController {
     }
 
     @GetMapping("/categorySetting")
+    @PreAuthorize("hasAuthority('admin')")
     public void getCategorySetting() {
 
     }
@@ -93,6 +94,14 @@ public class AdminController {
         return list;
     }
 
+    @PostMapping("/addSubCategory")
+    @ResponseBody
+    public String addSubCategory(SubCategory subCategory){
+
+        subCategoryService.addSubCategory(subCategory);
+
+        return null;
+    }
 }
 
 

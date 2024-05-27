@@ -18,4 +18,10 @@ public class SubCategoryService {
 
         return mapper.getSubCategoryList(categoryId);
     }
+
+    public void addSubCategory(SubCategory subCategory) {
+
+        mapper.addSubCategory(subCategory);
+
+    }
 }

@@ -189,8 +189,6 @@ public class ShoppingController {
         cart.forEach(System.out::println);
 
         model.addAttribute("cartList", cart);
-
     }
-
 
 }
