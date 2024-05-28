@@ -178,6 +178,31 @@
     });
   }
 
+  function subList() {
+    const subCateList = $(".subCategoryList");
+
+    const categorySelected = $(".selectCategory option:selected").val();
+
+    $.get({
+      url: "/admin/getSubCategory",
+      data: {categoryId: categorySelected},
+      success: function (result) {
+
+        $(".subCategoryList option").remove();
+
+        $(result).each((key, value) => {
+          subCateList.append(
+            '<option value=' + value.subCategoryId + '>' + value.subCategoryName + '</option>'
+          );
+        })
+      },
+      error: function (error) {
+        console.log(error);
+      }
+
+    });
+  }
+
   function showSubList(selectedVal, target) {
 
     const subCateList = $(target);
@@ -223,7 +248,7 @@
 
         alert("추가 완료");
         $("#InsertSubCategory").val('');
-        showSubList();
+        subList();
       },
       error: function (error) {
         console.log(error + "오류 발생");
