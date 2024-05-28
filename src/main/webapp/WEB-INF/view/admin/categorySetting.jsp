@@ -21,11 +21,9 @@
     .tabActive {
         display: block;
     }
-
-
 </style>
 <body>
-<c:import url="/WEB-INF/view/layout/navbar.jsp"></c:import>
+<c:import url="/WEB-INF/view/layout/navbar.jsp"/>
 
 <div class="container col-md-6" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
     <h3>카테고리 설정</h3>
@@ -52,7 +50,7 @@
             </div>
 
             <div class="col-md-4">
-                <select class="form-select selectCategory" name="categoryName" onchange="showSubList()">
+                <select class="form-select selectCategory" name="categoryName">
                 </select>
             </div>
             <div class="col-md-4">
@@ -91,7 +89,7 @@
             </div>
 
             <div class="col-md-4">
-                <select class="form-select selectCategory" name="categoryName" onchange="showSubList()">
+                <select class="form-select selectCategory" name="categoryName">
                 </select>
             </div>
             <div class="col-md-4">
@@ -121,6 +119,21 @@
     $("#tab1").show();
     categoryList();
 
+    $("#tab1 .selectCategory").on('change', function () {
+      const tab1SelectedVal = $("#tab1 .selectCategory option:selected").val();
+      if (tab1SelectedVal) {
+        showSubList(tab1SelectedVal, "#tab1 .subCategoryList");
+      }
+    });
+
+    $("#tab2 .selectCategory").on('change', function () {
+
+      const tab2SelectedVal = $("#tab2 .selectCategory option:selected").val();
+
+      if (tab2SelectedVal) {
+        showSubList(tab2SelectedVal, "#tab2 .subCategoryList");
+      }
+    });
   })
 
   function categoryList() {
@@ -130,10 +143,8 @@
       success: function (result) {
 
         $(".selectCategory").append(
-          '<option>' + "선택" + '</option>'
+          '<option value="default">' + "선택" + '</option>'
         );
-
-
         $(result).each((key, value) => {
           $(".selectCategory").append(
             '<option value=' + value.categoryId + '>' + value.categoryName + '</option>'
@@ -146,10 +157,10 @@
     });
   }
 
+
   function addCategory() {
 
     const categoryVal = $("#InsertCategory").val();
-
 
     $.post({
       url: "/admin/addCategory",
@@ -167,24 +178,22 @@
     });
   }
 
-  function showSubList() {
-    const subCateList = $(".subCategoryList");
+  function showSubList(selectedVal, target) {
 
-    const categorySelected = $(".selectCategory option:selected").val();
+    const subCateList = $(target);
 
     $.get({
       url: "/admin/getSubCategory",
-      data: {categoryId: categorySelected},
+      data: {categoryId: selectedVal},
       success: function (result) {
 
-        $(".subCategoryList option").remove();
-
+        $(".subCategoryList").empty();
 
         if (result.length === 0) {
           subCateList.append(
             '<option>' + "항목이 존재하지않습니다" + '</option>'
           );
-        } else {
+        } else if (result.length !== 0) {
           $(result).each((key, value) => {
             subCateList.append(
               '<option value=' + value.subCategoryId + '>' + value.subCategoryName + '</option>'
@@ -195,7 +204,6 @@
       error: function (error) {
         console.log(error);
       }
-
     });
   }
 
@@ -223,28 +231,28 @@
     });
   }
 
-
   $("#pills-tab li").on('click', function (e) {
 
     const index = $(this).index();
 
     console.log('index=' + index);
 
-    if (index == 0) {
+    if (index === 0) {
 
       $("#tab2").hide();
       $("#tab1").show();
+      $("#tab1 .selectCategory").val('default');
+      $("#tab1 .subCategoryList").val('');
     }
-    if (index == 1) {
+    if (index === 1) {
       $("#tab1").hide();
       $("#tab2").show();
+      $("#tab2 .selectCategory").val('default');
+      $("#tab2 .subCategoryList").val('');
     }
   });
 
-
 </script>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

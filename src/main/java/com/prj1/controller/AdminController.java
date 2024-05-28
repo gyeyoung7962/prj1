@@ -85,9 +85,7 @@ public class AdminController {
 
     @GetMapping("/getSubCategory")
     @ResponseBody
-    public List<SubCategory> getSubCategory(@RequestParam("categoryId")Integer categoryId){
-
-        System.out.println("categoryId:"+categoryId);
+    public List<SubCategory> getSubCategory(@RequestParam(value="categoryId")Integer categoryId){
 
         List<SubCategory> list = subCategoryService.subCategoryList(categoryId);
 
