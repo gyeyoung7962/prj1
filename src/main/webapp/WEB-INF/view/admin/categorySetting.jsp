@@ -93,7 +93,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-danger">삭제</button>
+                <button class="btn btn-danger" id="cate_delBtn">삭제</button>
             </div>
         </div>
 
@@ -104,11 +104,12 @@
 
             <div class="col-md-4">
                 <select class="form-select subCategoryList" name="subCategoryName">
+
                 </select>
             </div>
 
             <div class="col-md-4">
-                <button class="btn btn-danger">삭제</button>
+                <button class="btn btn-danger" id="subCate_delBtn">삭제</button>
             </div>
         </div>
     </div>
@@ -118,6 +119,8 @@
   $(() => {
     $("#tab1").show();
     categoryList();
+
+    $("#subCate_delBtn").attr("disabled", true);
 
     $("#tab1 .selectCategory").on('change', function () {
       const tab1SelectedVal = $("#tab1 .selectCategory option:selected").val();
@@ -137,11 +140,9 @@
   })
 
   function categoryList() {
-
     $.get({
       url: "/admin/getCategory",
       success: function (result) {
-
         $(".selectCategory").append(
           '<option value="default">' + "선택" + '</option>'
         );
@@ -157,16 +158,12 @@
     });
   }
 
-
   function addCategory() {
-
     const categoryVal = $("#InsertCategory").val();
-
     $.post({
       url: "/admin/addCategory",
       data: {category: categoryVal},
       success: function () {
-
         alert("추가 완료");
         $("#InsertCategory").val('');
         $(".selectCategory").empty();
@@ -180,16 +177,12 @@
 
   function subList() {
     const subCateList = $(".subCategoryList");
-
     const categorySelected = $(".selectCategory option:selected").val();
-
     $.get({
       url: "/admin/getSubCategory",
       data: {categoryId: categorySelected},
       success: function (result) {
-
         $(".subCategoryList option").remove();
-
         $(result).each((key, value) => {
           subCateList.append(
             '<option value=' + value.subCategoryId + '>' + value.subCategoryName + '</option>'
@@ -199,21 +192,26 @@
       error: function (error) {
         console.log(error);
       }
-
     });
   }
 
   function showSubList(selectedVal, target) {
-
     const subCateList = $(target);
-
     $.get({
       url: "/admin/getSubCategory",
       data: {categoryId: selectedVal},
       success: function (result) {
-
         $(".subCategoryList").empty();
-
+        $("#tab2 .subCategoryList").append(
+          '<option value="0">' + "-선택-" + '</option>'
+        );
+        $("#tab2 .subCategoryList option:selected").on('change', function () {
+          if ($("#tab2 .subCategoryList option:selected").val() == 0) {
+            console.log("default");
+            $("#subCate_delBtn").attr("disabled", true);
+            alert("삭제 불가");
+          }
+        })
         if (result.length === 0) {
           subCateList.append(
             '<option>' + "항목이 존재하지않습니다" + '</option>'
@@ -232,20 +230,15 @@
     });
   }
 
-
   function addSubCategory() {
-
     const categorySelected = $(".selectCategory option:selected").val();
-
     $.post({
       url: "/admin/addSubCategory",
       data: {
-
         parentCategoryId: categorySelected,
         subCategoryName: $("#InsertSubCategory").val()
       },
       success: function () {
-
         alert("추가 완료");
         $("#InsertSubCategory").val('');
         subList();
@@ -257,13 +250,9 @@
   }
 
   $("#pills-tab li").on('click', function (e) {
-
     const index = $(this).index();
-
     console.log('index=' + index);
-
     if (index === 0) {
-
       $("#tab2").hide();
       $("#tab1").show();
       $("#tab1 .selectCategory").val('default');
@@ -274,9 +263,43 @@
       $("#tab2").show();
       $("#tab2 .selectCategory").val('default');
       $("#tab2 .subCategoryList").val('');
+      $("#tab2 .subCategoryList").append(
+        '<option value="default">' + "----" + '</option>'
+      );
     }
   });
 
+  $("#tab2 .selectCategory").on('change', function () {
+    categoryVal = $("#tab2 .selectCategory option:selected").val();
+    categoryDataList(categoryVal);
+  });
+
+  function categoryDataList(categoryVal) {
+    console.log("categoryVal=" + categoryVal);
+
+    $("#tab2 .subCategoryList").off('change').on('change', function () {
+      const subCategoryVal = $(".subCategoryList option:selected").val();
+      $(".subCategoryList option[value='" + 0 + "']").remove();
+      $.get({
+        url: "/admin/subCategoryDataCount",
+        data: {
+          subCategoryId: subCategoryVal
+        },
+        success: function (result) {
+          if (result == 0) {
+            alert("삭제가능");
+            $("#subCate_delBtn").attr("disabled", false);
+          } else if (result == 1) {
+            alert("삭제 불가능");
+            $("#subCate_delBtn").attr("disabled", true);
+          }
+        },
+        error: function (error) {
+          console.log(error + "에러 발생");
+        }
+      });
+    })
+  }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="

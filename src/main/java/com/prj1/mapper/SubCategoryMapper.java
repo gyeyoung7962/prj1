@@ -22,4 +22,15 @@ public interface SubCategoryMapper {
             values(#{parentCategoryId}, #{subCategoryName})
             """)
     void addSubCategory(SubCategory subCategory);
+
+
+    @Select("""
+            select count(*) from
+                                subCategory s join product p
+            on p.subCategory_id = s.subCategory_id
+                    join category c
+                    on c.category_id = s.parent_category_id
+            where s.subCategory_id = #{subCategoryId}
+            """)
+    int countProduct(Integer subCategoryId);
 }

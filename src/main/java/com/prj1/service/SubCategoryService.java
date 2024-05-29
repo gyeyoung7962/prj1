@@ -24,4 +24,19 @@ public class SubCategoryService {
         mapper.addSubCategory(subCategory);
 
     }
+
+    public int countProduct(Integer subCategoryId) {
+
+        int count = mapper.countProduct(subCategoryId);
+
+        if(count > 0){
+            count = 1;
+        }
+        else if(count == 0){
+            count = 0;
+        }
+
+        return count;
+
+    }
 }

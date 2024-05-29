@@ -232,3 +232,23 @@ delete from
 
 select *
 from subCategory;
+
+desc subCategory;
+desc category;
+desc product;
+
+select p.name ,sc.subCategory_name, sc.subCategory_id from
+             product p join subCategory sc
+on p.subCategory_id = sc.subCategory_id
+join category c
+on c.category_id = sc.parent_category_id
+where sc.parent_category_id = 1;
+
+select count(*) from
+                    subCategory s join product p
+on p.subCategory_id = s.subCategory_id
+        join category c
+        on c.category_id = s.parent_category_id
+where s.subCategory_id = 1;
+
+

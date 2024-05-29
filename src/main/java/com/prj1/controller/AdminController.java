@@ -25,7 +25,6 @@ public class AdminController {
     private final SubCategoryService subCategoryService;
 
 
-
     @GetMapping("/index")
     @PreAuthorize("hasAnyAuthority('admin')")
     public void adminIndex() {
@@ -85,7 +84,7 @@ public class AdminController {
 
     @GetMapping("/getSubCategory")
     @ResponseBody
-    public List<SubCategory> getSubCategory(@RequestParam(value="categoryId")Integer categoryId){
+    public List<SubCategory> getSubCategory(@RequestParam(value = "categoryId") Integer categoryId) {
 
         List<SubCategory> list = subCategoryService.subCategoryList(categoryId);
 
@@ -94,11 +93,20 @@ public class AdminController {
 
     @PostMapping("/addSubCategory")
     @ResponseBody
-    public String addSubCategory(SubCategory subCategory){
+    public String addSubCategory(SubCategory subCategory) {
 
         subCategoryService.addSubCategory(subCategory);
 
         return null;
+    }
+
+    @GetMapping("/subCategoryDataCount")
+    @ResponseBody
+    public int subCategoryDataCount(@RequestParam("subCategoryId") Integer subCategoryId) {
+
+        System.out.println("subCategoryId = " + subCategoryId);
+
+        return subCategoryService.countProduct(subCategoryId);
     }
 }
 
