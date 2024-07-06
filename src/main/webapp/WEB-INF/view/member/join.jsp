@@ -28,7 +28,7 @@
                 <input type="email" class="form-control" id="inputEmail" name="email" required>
             </div>
             <div class="col-md-3">
-                <button class="btn btn-secondary" onclick="emailChk()">중복체크</button>
+                <button class="btn btn-secondary" id="emailChkBtn">중복체크</button>
             </div>
 
             <div>
@@ -76,7 +76,13 @@
 
 <script>
 
+  $("#emailChkBtn").on('click', function(event){
+    event.preventDefault();
+    emailChk();
+  });
+
     function emailChk() {
+
 
         const emailVal = $("#inputEmail").val();
         $.ajax({

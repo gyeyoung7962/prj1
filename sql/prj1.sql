@@ -252,3 +252,6 @@ on p.subCategory_id = s.subCategory_id
 where s.subCategory_id = 1;
 
 
+select *
+from member;
+

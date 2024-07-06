@@ -40,34 +40,6 @@ public class MemberController {
         return "member/login";
     }
 
-    /*
-    @PostMapping("/login")
-    public String loginPost(Member member,Model model, HttpServletRequest req){
-
-        HttpSession session = req.getSession();
-
-
-
-
-        Member loginMember = service.loginMember(member);
-
-        if(session != null && loginMember !=null){
-            session.setAttribute("login", loginMember);
-            session.setAttribute("nickName", loginMember.getNickName());
-            session.setMaxInactiveInterval(1800);
-            model.addAttribute("session", session);
-            model.addAttribute("nickName", loginMember.getNickName());
-            model.addAttribute("id", loginMember.getId());
-        }
-        else if(loginMember == null){
-            return "redirect:/member/login";
-        }
-        return "redirect:/";
-    }
-
-     */
-
-
 
     //회원정보 조회
     @GetMapping("/info")
